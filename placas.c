@@ -27,6 +27,52 @@ int main(){
   
   //primer procesador
   if (rank==0){
+
+    double **matriz_mundo;
+    matriz_mundo = (double**) malloc(n*sizeof(double*));
+
+    for (i=0; i<=n; i++){
+      matriz_mundo[i] = (double*) malloc(n*sizeof(double));
+    }
+
+    for(i=0; i<n; i++){
+      for(j=0; j<n; j++){
+	matriz_mundo[i][j] = -1;
+      }
+    }
+
+    for(i=0; i<n; i++){
+      for(j=0; j<m; j++){
+	matriz_mundo[i][j] = 5;
+      }
+    }
+
+    //fontera vertical
+    for(i=0; i<n; i++){
+      matriz_mundo[i][0] = 0;
+    }
+
+    //frontera horizontal
+    for(j=0; j<m; j++){
+      matriz_mundo[0][j] = 0;
+      matriz_mundo[n-1][j] = 0;
+    }
+
+    //primera placa
+    if(m>=(int)((L/2-d/2)/h)){
+      for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
+	matriz_mundo[i][(int)((L/2-d/2)/h)] = -V0/2;
+      }
+    }
+    
+    //segunda placa
+    if(m>=(int)((L/2+d/2)/h)){
+      for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
+	matriz_mundo[i][(int)((L/2+d/2)/h)] = V0/2;
+      }
+    }
+
+
     int m = n/world_size+1;
     double **matriz;
     matriz = (double**) malloc(n*sizeof(double*));
@@ -34,49 +80,33 @@ int main(){
     for (i=0; i<=n; i++){
       matriz[i] = (double*) malloc(m*sizeof(double));
     }
-
-    for(i=0; i<n; i++){
-      for(j=0; j<m; j++){
-	matriz[i][j] = 5;
-      }
-    }
-
-    //fontera vertical
-    for(i=0; i<n; i++){
-      matriz[i][0] = 0;
-    }
-
-    //frontera horizontal
-    for(j=0; j<m; j++){
-      matriz[0][j] = 0;
-      matriz[n-1][j] = 0;
-    }
-
-    //primera placa
-    if(m>=(int)((L/2-d/2)/h)){
-      for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-	matriz[i][(int)((L/2-d/2)/h)] = -V0/2;
-      }
-    }
     
-    //segunda placa
-    if(m>=(int)((L/2+d/2)/h)){
-      for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-	matriz[i][(int)((L/2+d/2)/h)] = V0/2;
-      }
+    /*
+    //recive los datos de los demas procesadores y los mete a matriz mundo
+    int source;
+    for(source=1; source<size; source++){
+      MPI_Irecv(& );
+
+
     }
 
+    */
 
-    //imprime la matriz
-    printf("Imprimiendo desde el procesador %d\n", rank);
+    //imprime la matriz mundo
     for(i=0; i<n; i++){
-      for(j=0; j<m; j++){
-	printf("%f ", matriz[i][j]);
+      for(j=0; j<n; j++){
+	printf("%f ", matriz_mundo[i][j]);
       }printf("\n");
     }
 
 
+
   }
+
+
+  /*
+
+
   
 
   //ultimo procesador
@@ -119,18 +149,19 @@ int main(){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
 	matriz[i][pos_placa2] = V0/2;
       }
-      }
-
-    //imprime la matriz
-    printf("Imprimiendo desde el procesador %d\n", rank);
-    for(i=0; i<n; i++){
-      for(j=0; j<m; j++){
-	printf("%f ", matriz[i][j]);
-      }printf("\n");
     }
+
+
+    //manda la matriz a matriz mundo
+
+
 
   }
   
+
+
+
+
 
 
   //procesadores intermedios
@@ -169,16 +200,16 @@ int main(){
 	matriz[i][pos_placa2] = V0/2;
       }
     }
+
     
-    //imprime la matriz
-    printf("Imprimiendo desde el procesador %d\n", rank);
-    for(i=0; i<n; i++){
-      for(j=0; j<m; j++){
-	printf("%f ", matriz[i][j]);
-      }printf("\n");
-    }
+    //manda la matriz a matriz mundo
+
+
 
  }
+
+
+  */
 
 
 
