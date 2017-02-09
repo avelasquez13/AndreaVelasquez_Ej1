@@ -22,6 +22,8 @@ int main(){
   int first_col = z*rank-1;
   int pos_placa1 = (int)((L/2-d/2)/h)-first_col;
   int pos_placa2 = (int)((L/2+d/2)/h)-first_col;
+
+  printf("Procesador # %d corriendo/n", rank);
   
   //primer procesador
   if (rank==0){
@@ -69,7 +71,7 @@ int main(){
     printf("Imprimiendo desde el procesador %d\n", rank);
     for(i=0; i<n; i++){
       for(j=0; j<m; j++){
-	printf("%f\n", matriz[i][j]);
+	printf("%f ", matriz[i][j]);
       }printf("\n");
     }
 
@@ -78,7 +80,7 @@ int main(){
   
 
   //ultimo procesador
-  else if(rank = world_size-1){
+  else if(rank == world_size-1){
     
     int m = n/world_size+1;
     double **matriz;
@@ -94,7 +96,7 @@ int main(){
       }
     }
 
-    //fontera vertical
+    /*//fontera vertical
     for(i=0; i<n; i++){
       matriz[i][m-1] = 0;
     }
@@ -117,13 +119,13 @@ int main(){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
 	matriz[i][pos_placa2] = V0/2;
       }
-    }
+      }*/
 
     //imprime la matriz
     printf("Imprimiendo desde el procesador %d\n", rank);
     for(i=0; i<n; i++){
       for(j=0; j<m; j++){
-	printf("%f\n", matriz[i][j]);
+	printf("%f ", matriz[i][j]);
       }printf("\n");
     }
 
@@ -147,7 +149,7 @@ int main(){
 	matriz[i][j] = 5;
       }
     }
-
+    /*
     //frontera horizontal
     for(j=0; j<m; j++){
       matriz[0][j] = 0;
@@ -167,12 +169,12 @@ int main(){
 	matriz[i][pos_placa2] = V0/2;
       }
     }
-
+    */
     //imprime la matriz
     printf("Imprimiendo desde el procesador %d\n", rank);
     for(i=0; i<n; i++){
       for(j=0; j<m; j++){
-	printf("%f\n", matriz[i][j]);
+	printf("%f ", matriz[i][j]);
       }printf("\n");
     }
 
