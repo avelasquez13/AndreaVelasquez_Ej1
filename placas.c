@@ -14,7 +14,7 @@ int main(){
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
   float L = 5, l = 2, d = 1, h = 5.0/512.0, V0 = 100, N = 2*pow((L/h), 2);
-  int n = 512;
+  int n = 64;
   
   //inicializa la matriz
   int i, j, k;
@@ -66,7 +66,7 @@ int main(){
 
 
     //imprime la matriz
-    printf("%d\n", rank);
+    printf("Imprimiendo desde el procesador %d\n", rank);
     for(i=0; i<n; i++){
       for(j=0; j<m; j++){
 	printf("%f\n", matriz[i][j]);
@@ -120,7 +120,7 @@ int main(){
     }
 
     //imprime la matriz
-    printf("%d\n", rank);
+    printf("Imprimiendo desde el procesador %d\n", rank);
     for(i=0; i<n; i++){
       for(j=0; j<m; j++){
 	printf("%f\n", matriz[i][j]);
@@ -169,7 +169,7 @@ int main(){
     }
 
     //imprime la matriz
-    printf("%d\n", rank);
+    printf("Imprimiendo desde el procesador %d\n", rank);
     for(i=0; i<n; i++){
       for(j=0; j<m; j++){
 	printf("%f\n", matriz[i][j]);
