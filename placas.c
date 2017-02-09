@@ -96,7 +96,7 @@ int main(){
       }
     }
 
-    /*//fontera vertical
+    //fontera vertical
     for(i=0; i<n; i++){
       matriz[i][m-1] = 0;
     }
@@ -108,18 +108,18 @@ int main(){
     }
 
     //primera placa
-    if(pos_placa1 >= 0){
+    if(pos_placa1 >= 0 && pos_placa1<m){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
 	matriz[i][pos_placa1] = -V0/2;
       }
     }
     
     //segunda placa
-    if(pos_placa2 >= 0){
+    if(pos_placa2 >= 0 && pos_placa2<m){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
 	matriz[i][pos_placa2] = V0/2;
       }
-      }*/
+      }
 
     //imprime la matriz
     printf("Imprimiendo desde el procesador %d\n", rank);
