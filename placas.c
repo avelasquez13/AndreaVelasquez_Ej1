@@ -149,7 +149,7 @@ int main(){
 	matriz[i][j] = 5;
       }
     }
-    /*
+    
     //frontera horizontal
     for(j=0; j<m; j++){
       matriz[0][j] = 0;
@@ -169,7 +169,7 @@ int main(){
 	matriz[i][pos_placa2] = V0/2;
       }
     }
-    */
+    
     //imprime la matriz
     printf("Imprimiendo desde el procesador %d\n", rank);
     for(i=0; i<n; i++){
