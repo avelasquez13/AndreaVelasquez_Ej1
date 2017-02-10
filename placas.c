@@ -103,7 +103,7 @@ int main(){
     }
 
     //recibe los datos del ultimo procesador y los mete a matriz_mundo
-    MPI_Irecv(&(matriz_[0][0]), n*m, MPI_DOUBLE, world_size-1, 0, MPI_COMM_WORLD, &recv_request);
+    MPI_Irecv(&(matriz[0][0]), n*m, MPI_DOUBLE, world_size-1, 0, MPI_COMM_WORLD, &recv_request);
     for(i=0; i<n; i++){
 	for(j=1; j<m; j++){
 	  matriz_mundo[i][z*(world_size-1)+j-1] = matriz[i][j];
