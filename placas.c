@@ -58,7 +58,7 @@ int main(){
       matriz_mundo[n-1][j] = 0;
     }
 
-    /*//primera placa
+    //primera placa
     if(m>=(int)((L/2-d/2)/h)){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
 	matriz_mundo[i][(int)((L/2-d/2)/h)] = -V0/2;
@@ -70,11 +70,11 @@ int main(){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
 	matriz_mundo[i][(int)((L/2+d/2)/h)] = V0/2;
       }
-    }*/
+    }
 
     
 
-
+/*
     double **matriz_inter;
     matriz_inter = (double**) malloc(n*sizeof(double*));
 
@@ -84,7 +84,7 @@ int main(){
     
 
     //recibe los datos de los demas procesadores y los mete a matriz_mundo
-    int source;/*
+    int source;
     for(source=1; source<world_size-1; source++){
       MPI_Irecv(matriz_inter, n*(z+2), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, &recv_request);
       printf("recibio del procesador %d \n", source);  
@@ -94,7 +94,7 @@ int main(){
 	  printf("%d ", matriz_inter[i][j]);
 	}printf("\n");
 	}
-    }*/
+    }
 
 
     double **matriz;
@@ -104,7 +104,7 @@ int main(){
       matriz[i] = (double*) malloc(m*sizeof(double));
     }
 
-    /*
+   
     //recibe los datos del ultimo procesador y los mete a matriz_mundo
     //MPI_Irecv(&(matriz[0][0]), n*m, MPI_DOUBLE, world_size-1, 0, MPI_COMM_WORLD, &recv_request);
     for(i=0; i<n; i++){
@@ -124,12 +124,12 @@ int main(){
 
   }
 
-
+/*
       
 
   //ultimo procesador
   else if(rank == world_size-1){
-    /*
+    
     int m = z+1;
     double **matriz;
     matriz = (double**) malloc(n*sizeof(double*));
@@ -168,7 +168,7 @@ int main(){
 	matriz[i][pos_placa2] = V0/2;
       }
     }
-    */
+    
 
     
     //manda la matriz a matriz_mundo
@@ -186,7 +186,7 @@ int main(){
 
   //procesadores intermedios
   else{
-    /*
+    
     int m = z+2;
     double **matriz;
     matriz = (double**) malloc(n*sizeof(double*));
@@ -224,14 +224,13 @@ int main(){
     
     //manda la matriz a matriz_mundo
     MPI_Isend(matriz, n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, &send_request);
-    */
+    
 
  }
 
 
 
 
-  /*
 
   //inicializa la matriz temporal
   double **matriz2;
