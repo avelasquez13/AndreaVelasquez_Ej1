@@ -87,6 +87,7 @@ int main(){
     int source;
     for(source=1; source<world_size-1; source++){
       MPI_Irecv(&(matriz_inter[0][0]), n*(m+1), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, &recv_request);
+      printf("recibio del procesador %d", source);
       for(i=0; i<n; i++){
 	for(j=1; j<m; j++){
 	  matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
