@@ -14,7 +14,7 @@ int main(){
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
   float L = 5, l = 2, d = 1, h = 5.0/512.0, V0 = 100, N = 2*pow((L/h), 2);
-  int n = 64;
+  int n = 16;
   
   //inicializa la matriz
   int i, j, k;
@@ -23,11 +23,11 @@ int main(){
   int pos_placa1 = (int)((L/2-d/2)/h)-first_col;
   int pos_placa2 = (int)((L/2+d/2)/h)-first_col;
 
-  printf("Procesador # %d corriendo/n", rank);
-  
+ 
   //primer procesador
   if (rank==0){
 
+    int m = n/world_size+1;
     double **matriz_mundo;
     matriz_mundo = (double**) malloc(n*sizeof(double*));
 
@@ -73,7 +73,6 @@ int main(){
     }
 
 
-    int m = n/world_size+1;
     double **matriz;
     matriz = (double**) malloc(n*sizeof(double*));
 
