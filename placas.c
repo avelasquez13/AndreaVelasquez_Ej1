@@ -27,7 +27,7 @@ int main(){
   //primer procesador
   if (rank==0){
 
-    int m = n/world_size+1;
+    int m = z+1;
     double **matriz_mundo;
     matriz_mundo = (double**) malloc(n*sizeof(double*));
 
@@ -58,7 +58,7 @@ int main(){
       matriz_mundo[n-1][j] = 0;
     }
 
-    //primera placa
+    /*//primera placa
     if(m>=(int)((L/2-d/2)/h)){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
 	matriz_mundo[i][(int)((L/2-d/2)/h)] = -V0/2;
@@ -70,7 +70,7 @@ int main(){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
 	matriz_mundo[i][(int)((L/2+d/2)/h)] = V0/2;
       }
-    }
+    }*/
 
     
 
@@ -112,13 +112,13 @@ int main(){
 	  //matriz_mundo[i][z*(world_size-1)+j-1] = matriz[i][j];
 	}
       }
-
+*/
     //imprime la matriz mundo
     for(i=0; i<n; i++){
       for(j=0; j<n; j++){
 	printf("%f ", matriz_mundo[i][j]);
       }printf("\n");
-      }*/
+      }
     
 
 
