@@ -23,10 +23,10 @@ int main(){
   int pos_placa1 = (int)((L/2-d/2)/h)-first_col;
   int pos_placa2 = (int)((L/2+d/2)/h)-first_col;
 
-  printf("Procesador # %d corriendo/n", rank);
   
   //primer procesador
   if (rank==0){
+		//inicializa la matriz local (el bloque del proc 0)
     int m = n/world_size+1;
     double **matriz;
     matriz = (double**) malloc(n*sizeof(double*));
@@ -37,7 +37,21 @@ int main(){
 
     for(i=0; i<n; i++){
       for(j=0; j<m; j++){
-	matriz[i][j] = 5;
+				matriz[i][j] = 5;
+      }
+    }
+		
+		//inicializa la matriz global (donde se juntan todas)
+    double **matriz_Mundo;
+    matriz_Mundo = (double**) malloc(n*sizeof(double*));
+
+    for (i=0; i<=n; i++){
+      matriz_Mundo[i] = (double*) malloc(n*sizeof(double));
+    }
+
+    for(i=0; i<n; i++){
+      for(j=0; j<n; j++){
+				matriz_Mundo[i][j] = -1;
       }
     }
 
@@ -55,30 +69,36 @@ int main(){
     //primera placa
     if(m>=(int)((L/2-d/2)/h)){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-	matriz[i][(int)((L/2-d/2)/h)] = -V0/2;
+				matriz[i][(int)((L/2-d/2)/h)] = -V0/2;
       }
     }
     
     //segunda placa
     if(m>=(int)((L/2+d/2)/h)){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-	matriz[i][(int)((L/2+d/2)/h)] = V0/2;
+				matriz[i][(int)((L/2+d/2)/h)] = V0/2;
       }
     }
 
+    //TODO recibir las matrices y unificarlas	
+		int source;
+		for(source=1; source<world_rank; source++)
+		{
+			MPI_Irecv(
+			
+		}
+		
 
     //imprime la matriz
     printf("Imprimiendo desde el procesador %d\n", rank);
     for(i=0; i<n; i++){
-      for(j=0; j<m; j++){
-	printf("%f ", matriz[i][j]);
+      for(j=0; j<n; j++){
+				printf("%f ", matriz_Mundo[i][j]);
       }printf("\n");
     }
 
-
   }
-  
-
+  	
   //ultimo procesador
   else if(rank == world_size-1){
     
@@ -92,11 +112,11 @@ int main(){
 
     for(i=0; i<n; i++){
       for(j=0; j<m; j++){
-	matriz[i][j] = 5;
+				matriz[i][j] = 5;
       }
     }
 
-    //fontera vertical
+    /*//fontera vertical
     for(i=0; i<n; i++){
       matriz[i][m-1] = 0;
     }
@@ -110,24 +130,19 @@ int main(){
     //primera placa
     if(pos_placa1 >= 0 && pos_placa1<m){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-	matriz[i][pos_placa1] = -V0/2;
+				matriz[i][pos_placa1] = -V0/2;
       }
     }
     
     //segunda placa
     if(pos_placa2 >= 0 && pos_placa2<m){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-	matriz[i][pos_placa2] = V0/2;
+				matriz[i][pos_placa2] = V0/2;
       }
       }
+*/
+    //TODO enviar la matiz
 
-    //imprime la matriz
-    printf("Imprimiendo desde el procesador %d\n", rank);
-    for(i=0; i<n; i++){
-      for(j=0; j<m; j++){
-	printf("%f ", matriz[i][j]);
-      }printf("\n");
-    }
 
   }
   
@@ -146,7 +161,7 @@ int main(){
 
     for(i=0; i<n; i++){
       for(j=0; j<m; j++){
-	matriz[i][j] = 5;
+				matriz[i][j] = 5;
       }
     }
     
@@ -159,24 +174,19 @@ int main(){
     //primera placa
     if(pos_placa1 >= 0 && pos_placa1 < m){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-	matriz[i][pos_placa1] = -V0/2;
+				matriz[i][pos_placa1] = -V0/2;
       }
     }
     
     //segunda placa
     if(pos_placa2 >= 0 && pos_placa2 < m){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-	matriz[i][pos_placa2] = V0/2;
+				matriz[i][pos_placa2] = V0/2;
       }
     }
     
-    //imprime la matriz
-    printf("Imprimiendo desde el procesador %d\n", rank);
-    for(i=0; i<n; i++){
-      for(j=0; j<m; j++){
-	printf("%f ", matriz[i][j]);
-      }printf("\n");
-    }
+    //TODO enviar la matriz
+
 
  }
 
