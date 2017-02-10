@@ -13,7 +13,7 @@ int main(){
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-  float L = 5, l = 2, d = 1, h = 5.0/512.0, V0 = 100, N = 2*pow((L/h), 2);
+  float L = 5, l = 2, d = 1, h = 5.0/16, V0 = 100, N = 2*pow((L/h), 2);
   int n = 16;
   
   //inicializa la matriz
