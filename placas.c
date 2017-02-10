@@ -104,15 +104,15 @@ int main(){
       matriz[i] = (double*) malloc(m*sizeof(double));
     }
 
-   /*
+   
     //recibe los datos del ultimo procesador y los mete a matriz_mundo
-    //MPI_Irecv(&(matriz[0][0]), n*m, MPI_DOUBLE, world_size-1, 0, MPI_COMM_WORLD, &recv_request);
+    MPI_Recv(&(matriz[0][0]), n*m, MPI_DOUBLE, world_size-1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     for(i=0; i<n; i++){
 	for(j=1; j<m; j++){
-	  //matriz_mundo[i][z*(world_size-1)+j-1] = matriz[i][j];
+	  matriz_mundo[i][z*(world_size-1)+j-1] = matriz[i][j];
 	}
       }
-*/
+
     //imprime la matriz mundo
     for(i=0; i<n; i++){
       for(j=0; j<n; j++){
@@ -172,7 +172,7 @@ int main(){
 
     
     //manda la matriz a matriz_mundo
-    //MPI_Isend(&(matriz[0][0]), n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, &send_request);
+    MPI_Send(&(matriz[0][0]), n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
    
 
 
