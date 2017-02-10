@@ -72,6 +72,28 @@ int main(){
       }
     }
 
+    
+
+
+    double **matriz_inter;
+    matriz_inter = (double**) malloc(n*sizeof(double*));
+
+    for (i=0; i<=n; i++){
+      matriz_inter[i] = (double*) malloc((m+1)*sizeof(double));
+    }
+    
+
+    //receive los datos de los demas procesadores y los mete a matriz_mundo
+    int source;
+    for(source=1; source<world_size-1; source++){
+      MPI_Irecv(&(matriz_inter[0][0]), n*m, MPI_DOUBLE, source, 0, MPI_COMM_WORLD, &recv_request);
+      for(i=0; i<n; i++){
+	for(j=1; j<m; j++){
+	  matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
+	}
+      }
+    }
+
 
     double **matriz;
     matriz = (double**) malloc(n*sizeof(double*));
@@ -79,17 +101,14 @@ int main(){
     for (i=0; i<=n; i++){
       matriz[i] = (double*) malloc(m*sizeof(double));
     }
-    
-    /*
-    //recive los datos de los demas procesadores y los mete a matriz mundo
-    int source;
-    for(source=1; source<size; source++){
-      MPI_Irecv(& );
 
-
-    }
-
-    */
+    //recibe los datos del ultimo procesador y los mete a matriz_mundo
+    MPI_Irecv(&(matriz_[0][0]), n*m, MPI_DOUBLE, world_size-1, 0, MPI_COMM_WORLD, &recv_request);
+    for(i=0; i<n; i++){
+	for(j=1; j<m; j++){
+	  matriz_mundo[i][z*(world_size-1)+j-1] = matriz[i][j];
+	}
+      }
 
     //imprime la matriz mundo
     for(i=0; i<n; i++){
@@ -98,15 +117,10 @@ int main(){
       }printf("\n");
     }
 
-
-
   }
 
 
-  /*
-
-
-  
+    
 
   //ultimo procesador
   else if(rank == world_size-1){
@@ -151,7 +165,8 @@ int main(){
     }
 
 
-    //manda la matriz a matriz mundo
+    //manda la matriz a matriz_mundo
+    MPI_Isend(&(matriz[0][0]), n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, &send_request);
 
 
 
@@ -201,14 +216,12 @@ int main(){
     }
 
     
-    //manda la matriz a matriz mundo
-
+    //manda la matriz a matriz_mundo
+    MPI_Isend(&(matriz[0][0]), n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, &send_request);
 
 
  }
 
-
-  */
 
 
 
@@ -295,6 +308,10 @@ int main(){
 
 
   */
+
+  MPI_Wait(&send_request, &status);
+  MPI_Wait(&recv_request, &status);
+
 
   MPI_Finalize();
   return 0;
