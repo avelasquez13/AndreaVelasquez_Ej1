@@ -14,7 +14,7 @@ int main(){
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
   float L = 5, l = 2, d = 1, h = 5.0/512.0, V0 = 100, N = 2*pow((L/h), 2);
-  int n = 64;
+  int n = 16;
   
   //inicializa la matriz
   int i, j, k;
@@ -23,86 +23,115 @@ int main(){
   int pos_placa1 = (int)((L/2-d/2)/h)-first_col;
   int pos_placa2 = (int)((L/2+d/2)/h)-first_col;
 
-  
+ 
   //primer procesador
   if (rank==0){
-		//inicializa la matriz local (el bloque del proc 0)
+
     int m = n/world_size+1;
-    double **matriz;
-    matriz = (double**) malloc(n*sizeof(double*));
+    double **matriz_mundo;
+    matriz_mundo = (double**) malloc(n*sizeof(double*));
 
     for (i=0; i<=n; i++){
-      matriz[i] = (double*) malloc(m*sizeof(double));
-    }
-
-    for(i=0; i<n; i++){
-      for(j=0; j<m; j++){
-				matriz[i][j] = 5;
-      }
-    }
-		
-		//inicializa la matriz global (donde se juntan todas)
-    double **matriz_Mundo;
-    matriz_Mundo = (double**) malloc(n*sizeof(double*));
-
-    for (i=0; i<=n; i++){
-      matriz_Mundo[i] = (double*) malloc(n*sizeof(double));
+      matriz_mundo[i] = (double*) malloc(n*sizeof(double));
     }
 
     for(i=0; i<n; i++){
       for(j=0; j<n; j++){
-				matriz_Mundo[i][j] = -1;
+	matriz_mundo[i][j] = -1;
+      }
+    }
+
+    for(i=0; i<n; i++){
+      for(j=0; j<m; j++){
+	matriz_mundo[i][j] = 5;
       }
     }
 
     //fontera vertical
     for(i=0; i<n; i++){
-      matriz[i][0] = 0;
+      matriz_mundo[i][0] = 0;
     }
 
     //frontera horizontal
     for(j=0; j<m; j++){
-      matriz[0][j] = 0;
-      matriz[n-1][j] = 0;
+      matriz_mundo[0][j] = 0;
+      matriz_mundo[n-1][j] = 0;
     }
 
     //primera placa
     if(m>=(int)((L/2-d/2)/h)){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-				matriz[i][(int)((L/2-d/2)/h)] = -V0/2;
+	matriz_mundo[i][(int)((L/2-d/2)/h)] = -V0/2;
       }
     }
     
     //segunda placa
     if(m>=(int)((L/2+d/2)/h)){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-				matriz[i][(int)((L/2+d/2)/h)] = V0/2;
+	matriz_mundo[i][(int)((L/2+d/2)/h)] = V0/2;
       }
     }
 
-    //TODO recibir las matrices y unificarlas	
-		int source;
-		for(source=1; source<world_rank; source++)
-		{
-			MPI_Irecv(
-			
-		}
-		
+    
 
-    //imprime la matriz
-    printf("Imprimiendo desde el procesador %d\n", rank);
-    for(i=0; i<n; i++){
-      for(j=0; j<n; j++){
-				printf("%f ", matriz_Mundo[i][j]);
-      }printf("\n");
+
+    double **matriz_inter;
+    matriz_inter = (double**) malloc(n*sizeof(double*));
+
+    for (i=0; i<=n; i++){
+      matriz_inter[i] = (double*) malloc((z+2)*sizeof(double));
+    }
+    
+
+    //receive los datos de los demas procesadores y los mete a matriz_mundo
+    int source;
+    for(source=1; source<world_size-1; source++){
+      MPI_Irecv((matriz_inter[0][0]), n*(z+2), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, &recv_request);
+      printf("recibio del procesador %d \n", source);
+      for(i=0; i<n; i++){
+	for(j=1; j<m; j++){
+	  matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
+	  printf("%d ", matriz_inter[i][j]);
+	}printf("\n");
+      }
     }
 
+
+    double **matriz;
+    matriz = (double**) malloc(n*sizeof(double*));
+
+    for (i=0; i<=n; i++){
+      matriz[i] = (double*) malloc(m*sizeof(double));
+    }
+
+    /*
+    //recibe los datos del ultimo procesador y los mete a matriz_mundo
+    MPI_Irecv(&(matriz[0][0]), n*m, MPI_DOUBLE, world_size-1, 0, MPI_COMM_WORLD, &recv_request);
+    for(i=0; i<n; i++){
+	for(j=1; j<m; j++){
+	  matriz_mundo[i][z*(world_size-1)+j-1] = matriz[i][j];
+	}
+      }
+    */
+    /*
+    //imprime la matriz mundo
+    for(i=0; i<n; i++){
+      for(j=0; j<n; j++){
+	printf("%f ", matriz_mundo[i][j]);
+      }printf("\n");
+    }
+    */
+
+
   }
-  	
+
+
+    
+
   //ultimo procesador
   else if(rank == world_size-1){
     
-    int m = n/world_size+1;
+    int m = z+1;
     double **matriz;
     matriz = (double**) malloc(n*sizeof(double*));
 
@@ -112,11 +141,11 @@ int main(){
 
     for(i=0; i<n; i++){
       for(j=0; j<m; j++){
-				matriz[i][j] = 5;
+	matriz[i][j] = 5;
       }
     }
 
-    /*//fontera vertical
+    //fontera vertical
     for(i=0; i<n; i++){
       matriz[i][m-1] = 0;
     }
@@ -130,38 +159,46 @@ int main(){
     //primera placa
     if(pos_placa1 >= 0 && pos_placa1<m){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-				matriz[i][pos_placa1] = -V0/2;
+	matriz[i][pos_placa1] = -V0/2;
       }
     }
     
     //segunda placa
     if(pos_placa2 >= 0 && pos_placa2<m){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-				matriz[i][pos_placa2] = V0/2;
+	matriz[i][pos_placa2] = V0/2;
       }
-      }
-*/
-    //TODO enviar la matiz
+    }
+
+
+    /*
+    //manda la matriz a matriz_mundo
+    MPI_Isend(&(matriz[0][0]), n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, &send_request);
+    */
 
 
   }
   
 
 
+
+
+
+
   //procesadores intermedios
   else{
     
-    int m = n/world_size+2;
+    int m = z+2;
     double **matriz;
     matriz = (double**) malloc(n*sizeof(double*));
 
     for (i=0; i<=n; i++){
-      matriz[i] = (double*) malloc(m*sizeof(double));
+      matriz[i] = (double*) malloc((z+2)*sizeof(double));
     }
 
     for(i=0; i<n; i++){
       for(j=0; j<m; j++){
-				matriz[i][j] = 5;
+	matriz[i][j] = 5;
       }
     }
     
@@ -174,21 +211,24 @@ int main(){
     //primera placa
     if(pos_placa1 >= 0 && pos_placa1 < m){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-				matriz[i][pos_placa1] = -V0/2;
+	matriz[i][pos_placa1] = -V0/2;
       }
     }
     
     //segunda placa
     if(pos_placa2 >= 0 && pos_placa2 < m){
       for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-				matriz[i][pos_placa2] = V0/2;
+	matriz[i][pos_placa2] = V0/2;
       }
     }
-    
-    //TODO enviar la matriz
+
+
+    //manda la matriz a matriz_mundo
+    MPI_Isend(&(matriz[0][0]), n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, &send_request);
 
 
  }
+
 
 
 
@@ -275,6 +315,10 @@ int main(){
 
 
   */
+
+  MPI_Wait(&send_request, &status);
+  MPI_Wait(&recv_request, &status);
+
 
   MPI_Finalize();
   return 0;
