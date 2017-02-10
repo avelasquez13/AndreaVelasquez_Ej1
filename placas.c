@@ -90,7 +90,7 @@ int main(){
       printf("recibio del procesador %d \n", source);  
       for(i=0; i<n; i++){
 	for(j=1; j<=z; j++){
-	  //matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
+	  matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
 	  printf("%d ", matriz_inter[i][j]);
 	}printf("\n");
 	}
