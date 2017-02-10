@@ -124,7 +124,7 @@ int main(){
 
   }
 
-/*
+
       
 
   //ultimo procesador
@@ -223,13 +223,13 @@ int main(){
 
     
     //manda la matriz a matriz_mundo
-    MPI_Isend(matriz, n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, &send_request);
+    //MPI_Isend(matriz, n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, &send_request);
     
 
  }
 
 
-
+  /*
 
 
   //inicializa la matriz temporal
@@ -251,7 +251,7 @@ int main(){
     matriz2[i][(int)((L/2+d/2)/h)] = V0/2;
   }
 
-
+  
   //metodo de relajacion
   for(k=0; k<N; k++){
     for(i=1; i<n-1; i++){
@@ -314,8 +314,8 @@ int main(){
 
   */
 
-  MPI_Wait(&send_request, &status);
-  MPI_Wait(&recv_request, &status);
+  //MPI_Wait(&send_request, &status);
+  //MPI_Wait(&recv_request, &status);
 
 
   MPI_Finalize();
