@@ -93,8 +93,8 @@ int main(){
 	  //matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
 	  printf("%d ", matriz_inter[i][j]);
 	}printf("\n");
-	}*/
-    }
+	}
+    }*/
 
 
     double **matriz;
