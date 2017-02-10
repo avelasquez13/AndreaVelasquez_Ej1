@@ -89,8 +89,8 @@ int main(){
       MPI_Recv(&(matriz_inter), n*(z+2), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
       printf("recibio del procesador %d \n", source);  
       for(i=0; i<n; i++){
-	for(j=1; j<m; j++){
-	  matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
+	for(j=1; j<=z; j++){
+	  //matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
 	  printf("%d ", matriz_inter[i][j]);
 	}printf("\n");
 	}
