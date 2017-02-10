@@ -90,7 +90,8 @@ int main(){
       for(i=0; i<n; i++){
 	for(j=1; j<m; j++){
 	  matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
-	}
+	  printf("%d ", matriz_inter[i][j]);
+	}printf("\n");
       }
     }
 
@@ -109,13 +110,15 @@ int main(){
 	  matriz_mundo[i][z*(world_size-1)+j-1] = matriz[i][j];
 	}
       }
-
+    /*
     //imprime la matriz mundo
     for(i=0; i<n; i++){
       for(j=0; j<n; j++){
 	printf("%f ", matriz_mundo[i][j]);
       }printf("\n");
     }
+    */
+
 
   }
 
