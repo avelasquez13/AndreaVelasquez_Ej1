@@ -86,7 +86,7 @@ int main(){
     //receive los datos de los demas procesadores y los mete a matriz_mundo
     int source;
     for(source=1; source<world_size-1; source++){
-      MPI_Irecv(&(matriz_inter[0][0]), n*m, MPI_DOUBLE, source, 0, MPI_COMM_WORLD, &recv_request);
+      MPI_Irecv(&(matriz_inter[0][0]), n*(m+1), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, &recv_request);
       for(i=0; i<n; i++){
 	for(j=1; j<m; j++){
 	  matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
