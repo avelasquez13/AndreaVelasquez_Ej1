@@ -79,14 +79,14 @@ int main(){
     matriz_inter = (double**) malloc(n*sizeof(double*));
 
     for (i=0; i<=n; i++){
-      matriz_inter[i] = (double*) malloc((m+1)*sizeof(double));
+      matriz_inter[i] = (double*) malloc((z+2)*sizeof(double));
     }
     
 
     //receive los datos de los demas procesadores y los mete a matriz_mundo
     int source;
     for(source=1; source<world_size-1; source++){
-      MPI_Irecv(&(matriz_inter[0][0]), n*(m+1), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, &recv_request);
+      MPI_Irecv((matriz_inter[0][0]), n*(z+2), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, &recv_request);
       printf("recibio del procesador %d \n", source);
       for(i=0; i<n; i++){
 	for(j=1; j<m; j++){
@@ -131,7 +131,7 @@ int main(){
   //ultimo procesador
   else if(rank == world_size-1){
     
-    int m = n/world_size+1;
+    int m = z+1;
     double **matriz;
     matriz = (double**) malloc(n*sizeof(double*));
 
@@ -188,12 +188,12 @@ int main(){
   //procesadores intermedios
   else{
     
-    int m = n/world_size+2;
+    int m = z+2;
     double **matriz;
     matriz = (double**) malloc(n*sizeof(double*));
 
     for (i=0; i<=n; i++){
-      matriz[i] = (double*) malloc(m*sizeof(double));
+      matriz[i] = (double*) malloc((z+2)*sizeof(double));
     }
 
     for(i=0; i<n; i++){
