@@ -125,11 +125,11 @@ int main(){
   }
 
 
-    
+      
 
   //ultimo procesador
   else if(rank == world_size-1){
-    
+    /*
     int m = z+1;
     double **matriz;
     matriz = (double**) malloc(n*sizeof(double*));
@@ -143,7 +143,7 @@ int main(){
 	matriz[i][j] = 5;
       }
     }
-    /*
+    
     //fontera vertical
     for(i=0; i<n; i++){
       matriz[i][m-1] = 0;
@@ -186,7 +186,7 @@ int main(){
 
   //procesadores intermedios
   else{
-    
+    /*
     int m = z+2;
     double **matriz;
     matriz = (double**) malloc(n*sizeof(double*));
@@ -200,7 +200,7 @@ int main(){
 	matriz[i][j] = 5;
       }
     }
-    /* 
+     
     //frontera horizontal
     for(j=0; j<m; j++){
       matriz[0][j] = 0;
