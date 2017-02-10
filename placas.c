@@ -83,7 +83,7 @@ int main(){
     }
     
 
-    //receive los datos de los demas procesadores y los mete a matriz_mundo
+    //recibe los datos de los demas procesadores y los mete a matriz_mundo
     int source;/*
     for(source=1; source<world_size-1; source++){
       MPI_Irecv(matriz_inter, n*(z+2), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, &recv_request);
@@ -112,8 +112,7 @@ int main(){
 	  //matriz_mundo[i][z*(world_size-1)+j-1] = matriz[i][j];
 	}
       }
-    */
-      /*
+
     //imprime la matriz mundo
     for(i=0; i<n; i++){
       for(j=0; j<n; j++){
@@ -222,10 +221,10 @@ int main(){
       }
     }
 
-    */
+    
     //manda la matriz a matriz_mundo
     MPI_Isend(matriz, n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, &send_request);
-
+    */
 
  }
 
