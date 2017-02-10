@@ -86,7 +86,7 @@ int main(){
     //recibe los datos de los demas procesadores y los mete a matriz_mundo
     int source;
     for(source=1; source<world_size-1; source++){
-      MPI_Recv(&(matriz_inter), n*(z+2), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(&(matriz_inter), (n*(z+2)), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
       printf("recibio del procesador %d \n", source);  
       for(i=0; i<n; i++){
 	for(j=1; j<=z; j++){
@@ -223,7 +223,7 @@ int main(){
 
     
     //manda la matriz a matriz_mundo
-    MPI_Send(matriz, n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
+    MPI_Send(&(matriz[0][0]), n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
     
 
  }
