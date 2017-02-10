@@ -82,20 +82,20 @@ int main(){
       matriz_inter[i] = (double*) malloc((z+2)*sizeof(double));
     }
     
-/*
+
     //recibe los datos de los demas procesadores y los mete a matriz_mundo
     int source;
     for(source=1; source<world_size-1; source++){
-      MPI_Irecv(matriz_inter, n*(z+2), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, &recv_request);
+      MPI_Recv(matriz_inter, n*(z+2), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
       printf("recibio del procesador %d \n", source);  
       for(i=0; i<n; i++){
 	for(j=1; j<m; j++){
-	  //matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
+	  matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
 	  printf("%d ", matriz_inter[i][j]);
 	}printf("\n");
 	}
     }
-*/
+
 
     double **matriz;
     matriz = (double**) malloc(n*sizeof(double*));
@@ -223,7 +223,7 @@ int main(){
 
     
     //manda la matriz a matriz_mundo
-    //MPI_Isend(matriz, n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, &send_request);
+    MPI_Send(matriz, n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
     
 
  }
