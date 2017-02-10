@@ -104,7 +104,7 @@ int main(){
 				for(j=1; j<=z; j++)
 				{
 	  			matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
-	  			printf("%d ", matriz_inter[i][j]);
+	  			printf("%f ", matriz_inter[i][j]);
 				}printf("\n");
 			}
     }
