@@ -82,7 +82,7 @@ int main(){
       matriz_inter[i] = (double*) malloc((z+2)*sizeof(double));
     }
     
-
+/*
     //recibe los datos de los demas procesadores y los mete a matriz_mundo
     int source;
     for(source=1; source<world_size-1; source++){
@@ -93,7 +93,7 @@ int main(){
 	  matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
 	  printf("%d ", matriz_inter[i][j]);
 	}printf("\n");
-	}
+	}*/
     }
 
 
