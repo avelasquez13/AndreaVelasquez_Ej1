@@ -94,7 +94,7 @@ int main()
    {
    	for(j=0;j<m;j++)
    	{
-   	 printf("%f ",matriz_l[i*n+j]);
+   	 printf("%f ",matriz_l2[i*n+j]);
    	}
    	printf("\n");
    }  	
