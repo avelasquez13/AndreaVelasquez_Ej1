@@ -104,13 +104,21 @@ int main(){
     {
       MPI_Recv(matriz_interlineal, (n*(z+2)), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
       printf("recibio del procesador %d \n", source);  
-      matriz_inter=linealACuadrada(matriz_interlineal,n,z+2);
+      
       for(i=0; i<n; i++){
-		for(j=1; j<=z; j++){
-			matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
- 			printf("%f ", matriz_inter[i][j]);
-		}printf("\n");
-	}
+      	for(j=0; j<z+2; j++){
+					printf("%f ", matriz_interlineal[i*n+j]);	
+      	}
+      	printf("\n");
+      }
+      
+      matriz_inter=linealACuadrada(matriz_interlineal,n,z+2);
+      /*for(i=0; i<n; i++){
+				for(j	=1; j<=z; j++){
+					matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
+ 					printf("%f ", matriz_inter[i][j]);
+				}printf("\n");
+			}*/
     }
 
 		double **matriz_rv;
