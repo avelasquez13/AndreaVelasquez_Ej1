@@ -18,7 +18,7 @@ int main()
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-	 int i,j,n=3,m=3;
+	 int i,j,n=16,m=6;
 	 
 	 if(rank==0)
 	 {
