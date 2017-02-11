@@ -3,6 +3,9 @@
 #include <math.h>
 #include <mpi.h>
 
+double* cuadradaALineal(double** mCuadrada, int n, int m);
+double** linealACuadrada(double* mLineal, int n, int m);
+
 int main(){
 
   int world_size, rank, source, destination;
@@ -101,26 +104,34 @@ int main(){
     {
       MPI_Recv(matriz_interlineal, (n*(z+2)), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
       printf("recibio del procesador %d \n", source);  
+      matriz_inter=linealACuadrada(matriz_interlineal,n,z+2);
       for(i=0; i<n; i++){
 		for(j=1; j<=z; j++){
-			matriz_mundo[i][z*source+j-1] = matriz_interlineal[i*n+j];
- 			printf("%f ", matriz_interlineal[i*n+j]);
+			matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
+ 			printf("%f ", matriz_interlineal[i][j]);
 		}printf("\n");
 	}
     }
 
+		double **matriz_rv;
+    matriz_rv = (double**) malloc(n*sizeof(double*));
+
+    
+    for (i=0; i<=n; i++){
+      matriz_rv[i] = (double*) malloc((z+1)*sizeof(double));
+    }
+
     double *matriz_linealrv;
     matriz_linealrv = malloc(n*m*sizeof(double));
-
-
    
     //recibe los datos del ultimo procesador y los mete a matriz_mundo
     MPI_Recv(matriz_linealrv, n*m, MPI_DOUBLE, world_size-1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    matriz_rv=linealACuadrada(matriz_linealrv,n,z+1);
     for(i=0; i<n; i++){
-	for(j=1; j<m; j++){
-	  matriz_mundo[i][z*(world_size-1)+j-1] = matriz_linealrv[i*n+j];
-	}
-      }
+			for(j=1; j<m; j++){
+	  	matriz_mundo[i][z*(world_size-1)+j-1] = matriz_rv[i][j];
+			}
+    }
 
     //imprime la matriz mundo
     for(i=0; i<n; i++){
@@ -181,14 +192,7 @@ int main(){
     double *matriz_linealsn;
     matriz_linealsn = malloc(n*m*sizeof(double));
 
-    for(i=0; i<n; i++){
-      for(j=0; j<m; j++){
-	matriz_linealsn[n*i+j] = matriz[i][j];
-      }
-    }
- 
-
-   
+		matriz_linealsn = cuadradaALineal(matriz,n,m);  
     
     //manda la matriz a matriz_mundo
     MPI_Send(matriz_linealsn, n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
@@ -241,8 +245,13 @@ int main(){
     }
 
     
+ 		double *matriz_linealsn;
+    matriz_linealsn = malloc(n*m*sizeof(double));
+
+		matriz_linealsn = cuadradaALineal(matriz,n,m);  
+    
     //manda la matriz a matriz_mundo
-    MPI_Send(&(matriz[0][0]), n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
+    MPI_Send(matriz_linealsn, n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
     
 
  }
@@ -340,4 +349,45 @@ int main(){
   MPI_Finalize();
   return 0;
 
+}
+
+
+
+double* cuadradaALineal(double** mCuadrada, int n, int m)
+{
+	int i,j;
+	double *mlineal;
+	mlineal=malloc(n*m*sizeof(double));
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<m;j++)
+		{
+		//printf("convirtiendo el %f\n",mCuadrada[i][j]);
+		mlineal[i*n+j]=mCuadrada[i][j];
+		}
+	}
+
+	return mlineal;
+}
+
+double** linealACuadrada(double* mLineal, int n, int m)
+{
+	int i,j;
+	double **mCuadrada;
+	mCuadrada= (double**) malloc(n*sizeof(double*));
+    
+   for(i=0;i<n;i++)
+   {
+   	mCuadrada[i]=(double*) malloc(m*sizeof(double));
+   }
+   
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<m;j++)
+		{
+		mCuadrada[i][j]=mLineal[i*n+j];
+		}
+	}
+
+	return mCuadrada;
 }
