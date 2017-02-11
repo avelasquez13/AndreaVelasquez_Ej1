@@ -108,7 +108,7 @@ int main(){
       for(i=0; i<n; i++){
 		for(j=1; j<=z; j++){
 			matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
- 			printf("%f ", matriz_interlineal[i][j]);
+ 			printf("%f ", matriz_inter[i][j]);
 		}printf("\n");
 	}
     }
@@ -163,7 +163,7 @@ int main(){
 	matriz[i][j] = 5;
       }
     }
-    
+    /*
     //fontera vertical
     for(i=0; i<n; i++){
       matriz[i][m-1] = 0;
@@ -188,7 +188,7 @@ int main(){
 	matriz[i][pos_placa2] = V0/2;
       }
     }
-    
+    */
     double *matriz_linealsn;
     matriz_linealsn = malloc(n*m*sizeof(double));
 
@@ -223,7 +223,7 @@ int main(){
 	matriz[i][j] = 5;
       }
     }
-     
+     /*
     //frontera horizontal
     for(j=0; j<m; j++){
       matriz[0][j] = 9;
@@ -243,7 +243,7 @@ int main(){
 	matriz[i][pos_placa2] = V0/2;
       }
     }
-
+*/
     
  		double *matriz_linealsn;
     matriz_linealsn = malloc(n*m*sizeof(double));
