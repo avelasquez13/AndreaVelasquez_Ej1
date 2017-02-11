@@ -70,7 +70,8 @@ int main()
    //TODO envia la matriz lineal
     MPI_Send(matriz_l, n*m, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD);
    }
-   else if(rank==1)
+   
+   else
    {
    printf("entro el procesador 2 rank %d",rank);
    //crea la matriz lineal
