@@ -67,8 +67,8 @@ int main()
    	printf("\n");
    }
    
-   //TODO envia la matriz lineal
-    MPI_Send(matriz_l, n*m, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD);
+   // envia la matriz lineal
+   // MPI_Send(matriz_l, n*m, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD);
    }
    
    else
@@ -87,8 +87,8 @@ int main()
    	matriz2[i]=(double*) malloc(m*sizeof(double));
    }
 	 
-   //TODO recibe la matriz lineal
-   MPI_Recv(matriz_l2,n*m,MPI_DOUBLE,1,0,MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+   //recibe la matriz lineal
+   //MPI_Recv(matriz_l2,n*m,MPI_DOUBLE,1,0,MPI_COMM_WORLD, MPI_STATUS_IGNORE);
    
    //imprime la matriz lineal
    printf("Imprimendo la matriz lineal recibida\n");
