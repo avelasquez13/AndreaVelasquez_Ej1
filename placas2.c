@@ -16,8 +16,8 @@ int main(){
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-  float L = 5, l = 2, d = 1, h = 5.0/32, V0 = 100, N = 2*pow((L/h), 2);
-  int n = 32;
+  float L = 5, l = 2, d = 1, h = 5.0/16, V0 = 100, N = 2*pow((L/h), 2);
+  int n = 16;
   
   //inicializa la matriz
   int i, j, k;
@@ -25,7 +25,7 @@ int main(){
   int first_col = z*rank-1;
   int pos_placa1 = (int)((L/2-d/2)/h)-first_col;
   int pos_placa2 = (int)((L/2+d/2)/h)-first_col;
-
+  printf("rank: %d z: %d first col: %d second col: %d",rank, z, pos_placa1, pos_placa2);
  
   //primer procesador
   if (rank==0){
@@ -102,7 +102,7 @@ int main(){
     int source;
     for(source=1; source<world_size-1; source++)
     {
-      MPI_Recv(matriz_interlineal, (n*(z+2)), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(matriz_interlineal, n*(z+2), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
       if(source==1){
       printf("recibio del procesador %d \n", source);  
       
