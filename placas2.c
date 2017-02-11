@@ -103,6 +103,7 @@ int main(){
     for(source=1; source<world_size-1; source++)
     {
       MPI_Recv(matriz_interlineal, (n*(z+2)), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      if(rank==1){
       printf("recibio del procesador %d \n", source);  
       
       for(i=0; i<n; i++){
@@ -110,7 +111,7 @@ int main(){
 					printf("%f ", matriz_interlineal[i*n+j]);	
       	}
       	printf("\n");
-      }
+      }}
       
       matriz_inter=linealACuadrada(matriz_interlineal,n,z+2);
       for(i=0; i<n; i++){
