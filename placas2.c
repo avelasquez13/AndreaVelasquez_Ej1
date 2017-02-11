@@ -113,12 +113,12 @@ int main(){
       }
       
       matriz_inter=linealACuadrada(matriz_interlineal,n,z+2);
-      /*for(i=0; i<n; i++){
-				for(j	=1; j<=z; j++){
+      for(i=0; i<n; i++){
+				for(j=1; j<z+1; j++){
 					matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
- 					printf("%f ", matriz_inter[i][j]);
+ 				//	printf("%f ", matriz_inter[i][j]);
 				}printf("\n");
-			}*/
+			}
     }
 
 		double **matriz_rv;
@@ -144,7 +144,7 @@ int main(){
     //imprime la matriz mundo
     for(i=0; i<n; i++){
       for(j=0; j<n; j++){
-	printf("%f ", matriz_mundo[i][j]);
+				printf("%f ", matriz_mundo[i][j]);
       }printf("\n");
     }
     
