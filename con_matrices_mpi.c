@@ -72,6 +72,7 @@ int main()
    }
    else if(rank==1)
    {
+   printf("entro el procesador 2 rank %d",rank);
    //crea la matriz lineal
    	 double *matriz_l2;
 	 matriz_l2=malloc(n*m*sizeof(double));
@@ -128,7 +129,7 @@ double* cuadradaALineal(double** mCuadrada, int n, int m)
 	{
 		for(j=0;j<m;j++)
 		{
-		printf("convirtiendo el %f\n",mCuadrada[i][j]);
+		//printf("convirtiendo el %f\n",mCuadrada[i][j]);
 		mlineal[i*n+j]=mCuadrada[i][j];
 		}
 	}
