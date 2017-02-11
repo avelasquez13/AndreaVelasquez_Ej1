@@ -249,10 +249,10 @@ int main(){
     matriz_linealsn = malloc(n*m*sizeof(double));
 
 		matriz_linealsn = cuadradaALineal(matriz,n,m);  
-		printf("matriz lineal del procesador %d",rank);
+		printf("matriz lineal del procesador %d\n",rank);
 		    for(i=0; i<n; i++){
       for(j=0; j<m; j++){
-				printf("%f ",matriz_linealsn);
+				printf("%f ",matriz_linealsn[i*n+j]);
       }printf("\n");
     }
     //manda la matriz a matriz_mundo
