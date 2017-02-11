@@ -249,7 +249,12 @@ int main(){
     matriz_linealsn = malloc(n*m*sizeof(double));
 
 		matriz_linealsn = cuadradaALineal(matriz,n,m);  
-    
+		printf("matriz lineal del procesador %d",rank);
+		    for(i=0; i<n; i++){
+      for(j=0; j<m; j++){
+				printf("%f ",matriz_linealsn);
+      }printf("\n");
+    }
     //manda la matriz a matriz_mundo
     MPI_Send(matriz_linealsn, n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
     
