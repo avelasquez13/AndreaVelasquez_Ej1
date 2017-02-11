@@ -108,7 +108,7 @@ int main(){
       
       for(i=0; i<n; i++){
       	for(j=0; j<z+2; j++){
-					printf("%f ", matriz_interlineal[i*n+j]);	
+					printf("%.1f ", matriz_interlineal[i*n+j]);	
       	}
       	printf("\n");
       }}
@@ -145,7 +145,7 @@ int main(){
     //imprime la matriz mundo
     for(i=0; i<n; i++){
       for(j=0; j<n; j++){
-				printf("%f ", matriz_mundo[i][j]);
+				printf("%.1f ", matriz_mundo[i][j]);
       }printf("\n");
     }
     
@@ -258,11 +258,14 @@ int main(){
     matriz_linealsn = malloc(n*m*sizeof(double));
 
 		matriz_linealsn = cuadradaALineal(matriz,n,m);  
+		if(rank==1)
+		{
 		printf("matriz lineal del procesador %d\n",rank);
 		    for(i=0; i<n; i++){
       for(j=0; j<m; j++){
-				printf("%f ",matriz_linealsn[i*n+j]);
+				printf("%.1f ",matriz_linealsn[i*n+j]);
       }printf("\n");
+    }
     }
     //manda la matriz a matriz_mundo
     MPI_Send(matriz_linealsn, n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
