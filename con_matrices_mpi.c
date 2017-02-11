@@ -18,7 +18,7 @@ int main()
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-	 int i,j,n=16,m=6;
+	 int i,j,n=6,m=16;
 	 
 	 if(rank==0)
 	 {
@@ -48,7 +48,7 @@ int main()
    {
    	for(j=0;j<m;j++)
    	{
-   	 printf("%f ",matriz[i][j]);
+   	 printf("%.1f ",matriz[i][j]);
    	}
    	printf("\n");
    }
@@ -62,7 +62,7 @@ int main()
    {
    	for(j=0;j<m;j++)
    	{
-   	 printf("%f ",matriz_l[i*n+j]);
+   	 printf("%.1f ",matriz_l[i*n+j]);
    	}
    	printf("\n");
    }
@@ -73,7 +73,7 @@ int main()
    
    else
    {
-   printf("entro el procesador 2 rank %d",rank);
+   printf("entro el procesador 2 rank %d\n",rank);
    //crea la matriz lineal
    	 double *matriz_l2;
 	 matriz_l2=malloc(n*m*sizeof(double));
@@ -110,7 +110,7 @@ int main()
    {
    	for(j=0;j<m;j++)
    	{
-   	 printf("%f ",matriz2[i][j]);
+   	 printf("%.1f ",matriz2[i][j]);
    	}
    	printf("\n");
    }
