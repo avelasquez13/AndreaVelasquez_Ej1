@@ -117,6 +117,7 @@ int main(){
     //crea array del overlap enviado y recibido
     double *ol_siguiente;
     ol_siguiente=malloc(n*sizeof(double));
+    ol_siguiente=matriz_mundo[m-1];
     
     double *ol_recibido;
     ol_recibido=malloc(n*sizeof(double));
@@ -299,6 +300,7 @@ int main(){
     //crea array del overlap enviado y recibido
     double *ol_anterior;
     ol_anterior=malloc(n*sizeof(double));
+    ol_anterior=matriz[0];
     
     double *ol_recibido;
     ol_recibido=malloc(n*sizeof(double));
@@ -420,12 +422,14 @@ int main(){
       //crea arrays de overlaps enviados y recibidos
     double *ol_anterior_e;
     ol_anterior_e=malloc(n*sizeof(double));
+    ol_anterior_e=matriz[0];
     
     double *ol_anterior_r;
     ol_anterior_r=malloc(n*sizeof(double));
     
     double *ol_siguiente_e;
     ol_siguiente_e=malloc(n*sizeof(double));
+    ol_siguiente_e=matriz[m-1];
     
     double *ol_siguiente_r;
     ol_siguiente_r=malloc(n*sizeof(double));
