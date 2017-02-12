@@ -16,7 +16,7 @@ int main(){
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-  float L = 5, l = 2, d = 1, h = 5.0/16, V0 = 100, N = 2*pow((L/h), 2);
+  float L = 5, l = 2, d = 1, h = 5.0/32, V0 = 100, N = 2*pow((L/h), 2);
   int n = 32;
   
   //inicializa la matriz
@@ -170,7 +170,7 @@ int main(){
 
     for(i=0; i<m; i++){
       for(j=0; j<n; j++){
-	matriz[i][j] = 5;
+			matriz[i][j] = 5;
       }
     }
     
@@ -258,7 +258,7 @@ int main(){
     matriz_linealsn = malloc(n*m*sizeof(double));
 
 		matriz_linealsn = cuadradaALineal(matriz,m,n);  
-		/*if(rank==1)
+		if(rank==1)
 		{
 		printf("matriz lineal del procesador %d\n",rank);
 		    for(i=0; i<m; i++){
@@ -266,7 +266,7 @@ int main(){
 				printf("%.1f ",matriz_linealsn[i*n+j]);
       }printf("\n");
     }
-    }*/
+    }
     //manda la matriz a matriz_mundo
     MPI_Send(matriz_linealsn, n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
     
