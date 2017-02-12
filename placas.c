@@ -65,12 +65,13 @@ int main(){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 			matriz_mundo[(int)((L/2-d/2)/h)][j] = -V0/2;
       }
-      
+    }
     //segunda placa
     if(m>=(int)((L/2+d/2)/h)){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 			matriz_mundo[(int)((L/2+d/2)/h)][j] = V0/2;
       }
+    }
       
       //inicializa la matriz temporal
   double **matriz2;
@@ -98,11 +99,13 @@ int main(){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 			matriz_mundo[(int)((L/2-d/2)/h)][j] = -V0/2;
       }
+      }
     //segunda placa
     if(m>=(int)((L/2+d/2)/h)){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 			matriz_mundo[(int)((L/2+d/2)/h)][j] = V0/2;
       }
+    }
       
     for(i=1; i<m; i++){
       for(j=1; j<n-1; j++){
@@ -111,7 +114,7 @@ int main(){
     }
   }
 
-    }
+    
     
     
 
