@@ -176,8 +176,8 @@ int main(){
     
     //fontera vertical
     for(i=0; i<m; i++){
-      matriz_mundo[i][0] = 0;
-      matriz_mundo[i][n-1] = 0;
+      matriz[i][0] = 0;
+      matriz[i][n-1] = 0;
     }
     
     //frontera horizontal
@@ -236,8 +236,8 @@ int main(){
      
     //fontera vertical
     for(i=0; i<m; i++){
-      matriz_mundo[i][0] = 0;
-      matriz_mundo[i][n-1] = 0;
+      matriz[i][0] = 0;
+      matriz[i][n-1] = 0;
     }
 
     //primera placa

@@ -9,8 +9,8 @@ placas.pdf : grafica.py potencial.dat
 potencial.dat : placas
 	qsub submit_job.sh > potencial.dat
 
-placas : placas.c
-	${MPICC} -o placas -lm placas.c
+placas : placas2.c
+	${MPICC} -o placas -lm placas2.c
 
 clean :
 	rm placas
