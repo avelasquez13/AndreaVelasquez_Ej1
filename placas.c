@@ -15,8 +15,8 @@ int main(){
   MPI_Init(NULL, NULL);
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	//TODO arreglar l/h
-  float L = 5, l = 2, d = 1, h = 5.0/32, V0 = 100, N = 2*pow((L/h), 2);
+	//TODO arreglar l/h y N
+  float L = 5, l = 2, d = 1, h = 5.0/32, V0 = 100, N = 200*pow((L/h), 2);
   int n = 32;
   
   //inicializa la matriz
