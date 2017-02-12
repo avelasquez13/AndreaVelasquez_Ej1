@@ -134,6 +134,10 @@ int main(){
     //guarda el ol recibido en la matriz_mundo
     for(j=0;j<n;j++){
     matriz_mundo[m-1][j]=ol_recibido[j];
+    if(k==10||k==100||k==1000)
+    {
+    printf("%f ",ol_recibido[j]);
+    }
     }
   }
 
