@@ -40,38 +40,38 @@ int main(){
 
     for(i=0; i<n; i++){
       for(j=0; j<n; j++){
-	matriz_mundo[i][j] = -1;
+			matriz_mundo[i][j] = -1;
       }
     }
 
-    for(i=0; i<n; i++){
-      for(j=0; j<m; j++){
+    for(i=0; i<m; i++){
+      for(j=0; j<n; j++){
 	matriz_mundo[i][j] = 5;
       }
     }
 
     //fontera vertical
-    for(i=0; i<n; i++){
+    for(i=0; i<m; i++){
       matriz_mundo[i][0] = 0;
+      matriz_mundo[i][n-1] = 0;
     }
 
     //frontera horizontal
-    for(j=0; j<m; j++){
+    for(j=0; j<n; j++){
       matriz_mundo[0][j] = 0;
-      matriz_mundo[n-1][j] = 0;
     }
 
     //primera placa
     if(m>=(int)((L/2-d/2)/h)){
-      for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-	matriz_mundo[i][(int)((L/2-d/2)/h)] = -V0/2;
+      for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
+			matriz_mundo[(int)((L/2-d/2)/h)][j] = -V0/2;
       }
     }
     
     //segunda placa
     if(m>=(int)((L/2+d/2)/h)){
-      for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-	matriz_mundo[i][(int)((L/2+d/2)/h)] = V0/2;
+      for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
+	matriz_mundo[(int)((L/2+d/2)/h)][j] = V0/2;
       }
     }
 
@@ -79,11 +79,11 @@ int main(){
 
 
     double **matriz_inter;
-    matriz_inter = (double**) malloc(n*sizeof(double*));
+    matriz_inter = (double**) malloc((z+2)*sizeof(double*));
 
     
-    for (i=0; i<=n; i++){
-      matriz_inter[i] = (double*) malloc((z+2)*sizeof(double));
+    for (i=0; i<=(z+2); i++){
+      matriz_inter[i] = (double*) malloc(n*sizeof(double));
     }
 
     double *matriz_interlineal;
@@ -91,8 +91,8 @@ int main(){
 
 	
 
-    for (i=0;i<n;i++){
-	for (j=0; j<m;j++){
+    for (i=0;i<m;i++){
+	for (j=0; j<n;j++){
 		matriz_interlineal[i*n+j]=7;
 	}
     }
@@ -106,28 +106,28 @@ int main(){
       if(source==1){
       printf("recibio del procesador %d \n", source);  
       
-      for(i=0; i<n; i++){
-      	for(j=0; j<z+2; j++){
+      for(i=0; i<(z+2); i++){
+      	for(j=0; j<n; j++){
 					printf("%.1f ", matriz_interlineal[i*n+j]);	
       	}
       	printf("\n");
       }}
       
-      matriz_inter=linealACuadrada(matriz_interlineal,n,z+2);
-      for(i=0; i<n; i++){
-				for(j=1; j<z+1; j++){
-					matriz_mundo[i][z*source+j-1] = matriz_inter[i][j];
+      matriz_inter=linealACuadrada(matriz_interlineal,z+2,n);
+      for(i=1; i<z+1; i++){
+				for(j=0; j<n; j++){
+					matriz_mundo[z*source+i-1][j] = matriz_inter[i][j];
  				//	printf("%f ", matriz_inter[i][j]);
 				}printf("\n");
 			}
     }
 
 		double **matriz_rv;
-    matriz_rv = (double**) malloc(n*sizeof(double*));
+    matriz_rv = (double**) malloc((z+1)*sizeof(double*));
 
     
-    for (i=0; i<=n; i++){
-      matriz_rv[i] = (double*) malloc((z+1)*sizeof(double));
+    for (i=0; i<=(z+1); i++){
+      matriz_rv[i] = (double*) malloc(n*sizeof(double));
     }
 
     double *matriz_linealrv;
@@ -135,10 +135,10 @@ int main(){
    
     //recibe los datos del ultimo procesador y los mete a matriz_mundo
     MPI_Recv(matriz_linealrv, n*m, MPI_DOUBLE, world_size-1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    matriz_rv=linealACuadrada(matriz_linealrv,n,z+1);
-    for(i=0; i<n; i++){
-			for(j=1; j<m; j++){
-	  	matriz_mundo[i][z*(world_size-1)+j-1] = matriz_rv[i][j];
+    matriz_rv=linealACuadrada(matriz_linealrv,z+1,n);
+    for(i=1; i<m; i++){
+			for(j=0; j<n; j++){
+	  	matriz_mundo[z*(world_size-1)+i-1][j] = matriz_rv[i][j];
 			}
     }
 
@@ -161,14 +161,14 @@ int main(){
     
     int m = z+1;
     double **matriz;
-    matriz = (double**) malloc(n*sizeof(double*));
+    matriz = (double**) malloc(m*sizeof(double*));
 
-    for (i=0; i<=n; i++){
-      matriz[i] = (double*) malloc(m*sizeof(double));
+    for (i=0; i<=m; i++){
+      matriz[i] = (double*) malloc(n*sizeof(double));
     }
 
-    for(i=0; i<n; i++){
-      for(j=0; j<m; j++){
+    for(i=0; i<m; i++){
+      for(j=0; j<n; j++){
 	matriz[i][j] = 5;
       }
     }
@@ -201,7 +201,7 @@ int main(){
     double *matriz_linealsn;
     matriz_linealsn = malloc(n*m*sizeof(double));
 
-		matriz_linealsn = cuadradaALineal(matriz,n,m);  
+		matriz_linealsn = cuadradaALineal(matriz,m,n);  
     
     //manda la matriz a matriz_mundo
     MPI_Send(matriz_linealsn, n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
@@ -221,14 +221,14 @@ int main(){
     
     int m = z+2;
     double **matriz;
-    matriz = (double**) malloc(n*sizeof(double*));
+    matriz = (double**) malloc(m*sizeof(double*));
 
-    for (i=0; i<=n; i++){
-      matriz[i] = (double*) malloc((z+2)*sizeof(double));
+    for (i=0; i<=m; i++){
+      matriz[i] = (double*) malloc(n*sizeof(double));
     }
 
-    for(i=0; i<n; i++){
-      for(j=0; j<m; j++){
+    for(i=0; i<m; i++){
+      for(j=0; j<n; j++){
 	matriz[i][j] = 5;
       }
     }
@@ -257,12 +257,12 @@ int main(){
  		double *matriz_linealsn;
     matriz_linealsn = malloc(n*m*sizeof(double));
 
-		matriz_linealsn = cuadradaALineal(matriz,n,m);  
+		matriz_linealsn = cuadradaALineal(matriz,m,n);  
 		if(rank==1)
 		{
 		printf("matriz lineal del procesador %d\n",rank);
-		    for(i=0; i<n; i++){
-      for(j=0; j<m; j++){
+		    for(i=0; i<m; i++){
+      for(j=0; j<n; j++){
 				printf("%.1f ",matriz_linealsn[i*n+j]);
       }printf("\n");
     }
