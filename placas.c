@@ -410,7 +410,7 @@ int main(){
     ol_anterior_e=malloc(n*sizeof(double));
     
     double *ol_anterior_r;
-    ol_anteriror_r=malloc(n*sizeof(double));
+    ol_anterior_r=malloc(n*sizeof(double));
     
     double *ol_siguiente_e;
     ol_siguiente_e=malloc(n*sizeof(double));
