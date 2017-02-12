@@ -424,7 +424,7 @@ int main(){
     ol_anterior_e=malloc(n*sizeof(double));
     for(j=0;j<n;j++)
     {
-    	ol_anterior_e=3;
+    	ol_anterior_e[j]=3;
     }
     
     double *ol_anterior_r;
