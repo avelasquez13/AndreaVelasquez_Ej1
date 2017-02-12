@@ -3,9 +3,11 @@
 
 
 
+
 DENTRO DEL CLUSTER:
 
   make
+  
   qsub submit_job.sh
   
 	
