@@ -89,7 +89,7 @@ int main(){
 
   //metodo de relajacion
   for(k=0; k<N; k++){
-    for(i=1; i<m; i++){
+    for(i=1; i<m-1; i++){
       for(j=1; j<n-1; j++){
 	  matriz2[i][j]=0.25*(matriz_mundo[i+1][j]+matriz_mundo[i][j+1]+matriz_mundo[i-1][j]+matriz_mundo[i][j-1]);
       }
@@ -245,7 +245,7 @@ int main(){
 
   //metodo de relajacion
   for(k=0; k<N; k++){
-    for(i=0; i<m-1; i++){
+    for(i=1; i<m-1; i++){
       for(j=1; j<n-1; j++){
 	  matriz2[i][j]=0.25*(matriz[i+1][j]+matriz[i][j+1]+matriz[i-1][j]+matriz[i][j-1]);
       }
