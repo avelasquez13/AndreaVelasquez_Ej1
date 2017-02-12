@@ -245,27 +245,28 @@ int main(){
 
   //metodo de relajacion
   for(k=0; k<N; k++){
-    for(i=1; i<m; i++){
+    for(i=0; i<m-1; i++){
       for(j=1; j<n-1; j++){
-	  matriz2[i][j]=0.25*(matriz_mundo[i+1][j]+matriz_mundo[i][j+1]+matriz_mundo[i-1][j]+matriz_mundo[i][j-1]);
+	  matriz2[i][j]=0.25*(matriz[i+1][j]+matriz[i][j+1]+matriz[i-1][j]+matriz[i][j-1]);
       }
     }
-    //primera placa
-    if(m>=(int)((L/2-d/2)/h)){
+		//primera placa
+    if(pos_placa1 >= 0 && pos_placa1<m){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
-			matriz_mundo[(int)((L/2-d/2)/h)][j] = -V0/2;
+			matriz[pos_placa1][j] = -V0/2;
       }
-      }
+    }
+    
     //segunda placa
-    if(m>=(int)((L/2+d/2)/h)){
+    if(pos_placa2 >= 0 && pos_placa2<m){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
-			matriz_mundo[(int)((L/2+d/2)/h)][j] = V0/2;
+			matriz[pos_placa2][j] = V0/2;
       }
     }
       
-    for(i=1; i<m; i++){
+    for(i=0; i<m-1; i++){
       for(j=1; j<n-1; j++){
-			matriz_mundo[i][j] = matriz2[i][j];
+			matriz[i][j] = matriz2[i][j];
       }
     }
   }
