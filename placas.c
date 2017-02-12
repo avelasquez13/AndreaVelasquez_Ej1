@@ -18,8 +18,8 @@ int main(){
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	//TODO arreglar l/h y N
-  float L = 5, l = 2, d = 1, h = 5.0/64, V0 = 100, N = 2*pow((L/h), 2);
-  int n = 64;
+  float L = 5, l = 2, d = 1, h = 5.0/32, V0 = 100, N = 2*pow((L/h), 2);
+  int n = 32;
   
   //inicializa la matriz
   int i, j, k;
@@ -217,8 +217,8 @@ int main(){
     Ey[i] = (double*) malloc(n*sizeof(double));
   }
 
-  for(i=0; i<n; i++){
-    for(j=0; j<n; j++){
+  for(i=0; i<n-1; i++){
+    for(j=0; j<n-1; j++){
       Ex[i][j]=(matriz_mundo[i][j]-matriz_mundo[i+1][j])/h;
       Ey[i][j]=-(matriz_mundo[i][j]-matriz_mundo[i][j+1])/h;
     }
