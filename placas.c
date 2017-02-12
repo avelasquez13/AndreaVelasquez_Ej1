@@ -487,7 +487,7 @@ int main(){
     //guarda los ol recibidos en la matriz
     for(j=0;j<n;j++){
     matriz[0][j]=ol_anterior_r[j];
-    matriz[m-1][j]=ol_siguiente_r[j];
+    matriz[m-2][j]=ol_siguiente_r[j];
     }
   }
     
