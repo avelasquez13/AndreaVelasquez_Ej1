@@ -83,7 +83,7 @@ int main(){
 
   for(i=0; i<m; i++){
     for(j=0; j<n; j++){
-      matriz2[i][j] = -2;
+      matriz2[i][j] = 0;
     }
   }
 
@@ -94,7 +94,14 @@ int main(){
 	  matriz2[i][j]=0.25*(matriz_mundo[i+1][j]+matriz_mundo[i][j+1]+matriz_mundo[i-1][j]+matriz_mundo[i][j-1]);
       }
     }
-    //primera placa
+      
+    for(i=1; i<m; i++){
+      for(j=1; j<n-1; j++){
+			matriz_mundo[i][j] = matriz2[i][j];
+      }
+    }
+    
+        //primera placa
     if(m>=(int)((L/2-d/2)/h)){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 			matriz_mundo[(int)((L/2-d/2)/h)][j] = -V0/2;
@@ -104,12 +111,6 @@ int main(){
     if(m>=(int)((L/2+d/2)/h)){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 			matriz_mundo[(int)((L/2+d/2)/h)][j] = V0/2;
-      }
-    }
-      
-    for(i=1; i<m; i++){
-      for(j=1; j<n-1; j++){
-			matriz_mundo[i][j] = matriz2[i][j];
       }
     }
   }
@@ -238,7 +239,7 @@ int main(){
 
   for(i=0; i<m; i++){
     for(j=0; j<n; j++){
-      matriz2[i][j] = -4;
+      matriz2[i][j] = 0;
     }
   }
 
@@ -249,7 +250,15 @@ int main(){
 	  matriz2[i][j]=0.25*(matriz[i+1][j]+matriz[i][j+1]+matriz[i-1][j]+matriz[i][j-1]);
       }
     }
-		//primera placa
+
+      
+    for(i=1; i<m-1; i++){
+      for(j=1; j<n-1; j++){
+			matriz[i][j] = matriz2[i][j];
+      }
+    }
+    
+    		//primera placa
     if(pos_placa1 >= 0 && pos_placa1<m){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 			matriz[pos_placa1][j] = -V0/2;
@@ -260,12 +269,6 @@ int main(){
     if(pos_placa2 >= 0 && pos_placa2<m){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 			matriz[pos_placa2][j] = V0/2;
-      }
-    }
-      
-    for(i=1; i<m-1; i++){
-      for(j=1; j<n-1; j++){
-			matriz[i][j] = matriz2[i][j];
       }
     }
   }
@@ -338,7 +341,7 @@ int main(){
 
   for(i=0; i<m; i++){
     for(j=0; j<n; j++){
-      matriz2[i][j] = -3;
+      matriz2[i][j] = 0;
     }
   }
 
@@ -349,7 +352,14 @@ int main(){
 	  matriz2[i][j]=0.25*(matriz[i+1][j]+matriz[i][j+1]+matriz[i-1][j]+matriz[i][j-1]);
       }
     }
-    //primera placa
+
+    for(i=1; i<m-1; i++){
+      for(j=1; j<n-1; j++){
+			matriz[i][j] = matriz2[i][j];
+      }
+    }
+    
+        //primera placa
     if(pos_placa1 >= 0 && pos_placa1 < m){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 	matriz[pos_placa1][j] = -V0/2;
@@ -363,11 +373,6 @@ int main(){
       }
     }
       
-    for(i=1; i<m-1; i++){
-      for(j=1; j<n-1; j++){
-			matriz[i][j] = matriz2[i][j];
-      }
-    }
   }
     
     
