@@ -422,7 +422,10 @@ int main(){
       //crea arrays de overlaps enviados y recibidos
     double *ol_anterior_e;
     ol_anterior_e=malloc(n*sizeof(double));
-    ol_anterior_e=matriz[0];
+    for(j=0;j<n;j++)
+    {
+    	ol_anterior_e=3;
+    }
     
     double *ol_anterior_r;
     ol_anterior_r=malloc(n*sizeof(double));
