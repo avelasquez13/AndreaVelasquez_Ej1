@@ -103,21 +103,22 @@ int main(){
     for(source=1; source<world_size-1; source++)
     {
       MPI_Recv(matriz_interlineal, n*(z+2), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-
+			if(source==1)
+			{
       printf("recibio del procesador %d \n", source);  
       
       for(i=0; i<(z+2); i++){
       	for(j=0; j<n; j++){
-					printf("%.1f ", matriz_interlineal[i*m+j]);	
+					printf("%.1f ", matriz_interlineal[i*n+j]);	
       	}
       	printf("\n");
       }
-      
+      }
       matriz_inter=linealACuadrada(matriz_interlineal,z+2,n);
       for(i=1; i<z+1; i++){
 				for(j=0; j<n; j++){
 					matriz_mundo[z*source+i-1][j] = matriz_inter[i][j];
- 				//	printf("%f ", matriz_inter[i][j]);
+ 					//printf("%f ", matriz_inter[i][j]);
 				}
 				//printf("\n");
 			}
@@ -260,10 +261,16 @@ int main(){
 		matriz_linealsn = cuadradaALineal(matriz,m,n);  
 		if(rank==1)
 		{
-		printf("matriz lineal del procesador %d\n",rank);
+		printf("matriz del procesador %d\n",rank);
 		    for(i=0; i<m; i++){
       for(j=0; j<n; j++){
 				printf("%.1f ",matriz[i][j]);
+      }printf("\n");
+    }
+    		printf("matriz lineal del procesador %d\n",rank);
+		    for(i=0; i<m; i++){
+      for(j=0; j<n; j++){
+				printf("%.1f ",matriz[i*n+j]);
       }printf("\n");
     }
     }
