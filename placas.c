@@ -445,8 +445,6 @@ int main(){
     
     //printf("procesador %d listo para mandar y recibir", rank);
     
-    }
-    
     //envia y recibe los overlaps
     MPI_Isend(ol_anterior_e,n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &send_request[0]);
     MPI_Isend(ol_siguiente_e,n, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, &send_request[1]);
