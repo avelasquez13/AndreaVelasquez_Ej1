@@ -122,7 +122,7 @@ int main(){
     ol_recibido=malloc(n*sizeof(double));
     
     //envia y recibe el overlap
-    MPI_Isend(ol_siguiente,n, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD, &send_request);
+    MPI_Isend(ol_siguiente, n, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD, &send_request);
     MPI_Irecv(ol_recibido, n, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD, &recv_request);
     
     //guarda el ol recibido en la matriz_mundo
@@ -131,9 +131,7 @@ int main(){
     }
   }
 
-    
-    
-    
+   
 
 
     double **matriz_inter;
@@ -420,9 +418,9 @@ int main(){
     
     //envia y recibe los overlaps
     MPI_Isend(ol_anterior_e,n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &send_request);
-    MPI_Irecv(ol_anterior_r, n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &recv_request);
-    
     MPI_Isend(ol_siguiente_e,n, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, &send_request);
+    
+    MPI_Irecv(ol_anterior_r, n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &recv_request);
     MPI_Irecv(ol_siguiente_r, n, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, &recv_request);
     
     //guarda los ol recibidos en la matriz
