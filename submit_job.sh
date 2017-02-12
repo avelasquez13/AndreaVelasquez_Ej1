@@ -1,5 +1,5 @@
 #PBS -N placas
-#PBS -l nodes=1:ppn=8
+#PBS -l nodes=1:ppn=4
 #PBS -M a.velasquez12@uniandes.edu.co
 #PBS -m abe
 
