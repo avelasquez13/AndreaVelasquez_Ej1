@@ -263,7 +263,7 @@ int main(){
 		printf("matriz lineal del procesador %d\n",rank);
 		    for(i=0; i<m; i++){
       for(j=0; j<n; j++){
-				printf("%.1f ",matriz_linealsn[i*m+j]);
+				printf("%.1f ",matriz[i][j]);
       }printf("\n");
     }
     }
