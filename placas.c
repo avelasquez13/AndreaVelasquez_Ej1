@@ -142,7 +142,7 @@ int main(){
     matriz_mundo[m-1][j]=ol_recibido[j];
     if(k==0)
     {
-    printf("%f ",ol_recibido[j]);
+    printf("recibido: %f \n",ol_recibido[j]);
     }
     }
   }
@@ -444,7 +444,7 @@ int main(){
     
     //printf("procesador %d listo para mandar y recibir", rank);
     if(k==0){
-    printf("enviando desde el proc %d\n",rank);
+    printf("enviando desde el proc %d al %d\n",rank, rank-1);
     for(j=0;j<n;j++)
     {
     	printf("%f ",ol_anterior_e[j]);
