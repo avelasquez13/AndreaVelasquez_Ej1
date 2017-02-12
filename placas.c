@@ -438,6 +438,14 @@ int main(){
     ol_siguiente_r=malloc(n*sizeof(double));
     
     //printf("procesador %d listo para mandar y recibir", rank);
+    if(k==0){
+    printf("enviando desde el proc %d\n",rank);
+    for(j=0;j<n;j++)
+    {
+    	printf("%f ",ol_anterior_e[j]);
+    }
+    
+    }
     
     //envia y recibe los overlaps
     MPI_Isend(ol_anterior_e,n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &send_request);
