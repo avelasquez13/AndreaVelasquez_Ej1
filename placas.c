@@ -228,6 +228,50 @@ int main(){
       }
     }
     
+    
+    //inicializa la matriz temporal
+  double **matriz2;
+  matriz2 = (double**) malloc(m*sizeof(double*));
+
+  for (i=0; i<=m; i++){
+    matriz2[i] = (double*) malloc(n*sizeof(double));
+  }
+
+  for(i=0; i<m; i++){
+    for(j=0; j<n; j++){
+      matriz2[i][j] = 0;
+    }
+  }
+
+  //metodo de relajacion
+  for(k=0; k<N; k++){
+    for(i=1; i<m; i++){
+      for(j=1; j<n-1; j++){
+	  matriz2[i][j]=0.25*(matriz_mundo[i+1][j]+matriz_mundo[i][j+1]+matriz_mundo[i-1][j]+matriz_mundo[i][j-1]);
+      }
+    }
+    //primera placa
+    if(m>=(int)((L/2-d/2)/h)){
+      for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
+			matriz_mundo[(int)((L/2-d/2)/h)][j] = -V0/2;
+      }
+      }
+    //segunda placa
+    if(m>=(int)((L/2+d/2)/h)){
+      for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
+			matriz_mundo[(int)((L/2+d/2)/h)][j] = V0/2;
+      }
+    }
+      
+    for(i=1; i<m; i++){
+      for(j=1; j<n-1; j++){
+			matriz_mundo[i][j] = matriz2[i][j];
+      }
+    }
+  }
+    
+    
+    
     double *matriz_linealsn;
     matriz_linealsn = malloc(n*m*sizeof(double));
 
