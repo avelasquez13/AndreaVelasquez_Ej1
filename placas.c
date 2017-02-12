@@ -26,7 +26,7 @@ int main(){
   int pos_placa1 = (int)((L/2-d/2)/h)-first_col;
   int pos_placa2 = (int)((L/2+d/2)/h)-first_col;
  
-  //primer procesador
+  //--------------------primer procesador------------------------//
   if (rank==0){
 
     int m = z+1;
@@ -83,7 +83,7 @@ int main(){
 
   for(i=0; i<m; i++){
     for(j=0; j<n; j++){
-      matriz2[i][j] = 0;
+      matriz2[i][j] = -2;
     }
   }
 
@@ -183,10 +183,9 @@ int main(){
 
   }
 
+     
 
-      
-
-  //ultimo procesador
+  //-----------------ultimo procesador-----------------------//
   else if(rank == world_size-1){
     
     int m = z+1;
@@ -239,7 +238,7 @@ int main(){
 
   for(i=0; i<m; i++){
     for(j=0; j<n; j++){
-      matriz2[i][j] = 0;
+      matriz2[i][j] = -4;
     }
   }
 
@@ -264,7 +263,7 @@ int main(){
       }
     }
       
-    for(i=0; i<m-1; i++){
+    for(i=1; i<m-1; i++){
       for(j=1; j<n-1; j++){
 			matriz[i][j] = matriz2[i][j];
       }
@@ -291,7 +290,7 @@ int main(){
 
 
 
-  //procesadores intermedios
+  //-----------------procesadores intermedios------------------//
   else{
     
     int m = z+2;
@@ -327,6 +326,50 @@ int main(){
 	matriz[pos_placa2][j] = V0/2;
       }
     }
+    
+    
+    //inicializa la matriz temporal
+  double **matriz2;
+  matriz2 = (double**) malloc(m*sizeof(double*));
+
+  for (i=0; i<=m; i++){
+    matriz2[i] = (double*) malloc(n*sizeof(double));
+  }
+
+  for(i=0; i<m; i++){
+    for(j=0; j<n; j++){
+      matriz2[i][j] = -3;
+    }
+  }
+
+  //metodo de relajacion
+  for(k=0; k<N; k++){
+    for(i=1; i<m-1; i++){
+      for(j=1; j<n-1; j++){
+	  matriz2[i][j]=0.25*(matriz[i+1][j]+matriz[i][j+1]+matriz[i-1][j]+matriz[i][j-1]);
+      }
+    }
+    //primera placa
+    if(pos_placa1 >= 0 && pos_placa1 < m){
+      for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
+	matriz[pos_placa1][j] = -V0/2;
+      }
+    }
+    
+    //segunda placa
+    if(pos_placa2 >= 0 && pos_placa2 < m){
+      for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
+	matriz[pos_placa2][j] = V0/2;
+      }
+    }
+      
+    for(i=1; i<m-1; i++){
+      for(j=1; j<n-1; j++){
+			matriz[i][j] = matriz2[i][j];
+      }
+    }
+  }
+    
     
  		double *matriz_linealsn;
     matriz_linealsn = malloc(n*m*sizeof(double));
