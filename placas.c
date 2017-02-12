@@ -124,7 +124,6 @@ int main(){
     double *ol_recibido;
     ol_recibido=malloc(n*sizeof(double));
     
-    //printf("procesador 0 listo para recibir y mandar");
     
     //envia y recibe el overlap
     MPI_Isend(ol_siguiente, n, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD, &send_request[1]);
@@ -134,9 +133,7 @@ int main(){
     
         	MPI_Wait(&send_request[1], &send_status[1]);
       MPI_Wait(&recv_request[0], &recv_status[0]);
-    
-    //printf("procesador 0 recibio");
-    
+       
     
     
     //guarda el ol recibido en la matriz_mundo
@@ -308,16 +305,13 @@ int main(){
     double *ol_recibido;
     ol_recibido=malloc(n*sizeof(double));
     
-    //printf("ultimo procesador listo para mandar y recibir");
-    
+        
     //envia y recibe el overlap
     MPI_Isend(ol_anterior,n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &send_request[0]);
-    //printf("ultimo procesador mando");
     MPI_Irecv(ol_recibido, n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &recv_request[1]);
-    //printf("ultimo procesador recibio");
     
-    		MPI_Wait(&send_request[0], &send_status[0]);
-  	MPI_Wait(&recv_request[1], &recv_status[1]);
+    	MPI_Wait(&send_request[0], &send_status[0]);
+	MPI_Wait(&recv_request[1], &recv_status[1]);
     
 
 
