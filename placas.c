@@ -399,7 +399,7 @@ int main(){
       matriz[i][n-1] = 0;
     }
 
-    //primera placa
+    /*//primera placa
     if(pos_placa1 >= 0 && pos_placa1 < m){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 	matriz[pos_placa1][j] = -V0/2;
@@ -411,7 +411,7 @@ int main(){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 	matriz[pos_placa2][j] = V0/2;
       }
-    }
+    }*/
     
     
     //inicializa la matriz temporal
@@ -442,7 +442,7 @@ int main(){
       }
     }
     
-    //primera placa
+    /*//primera placa
     if(pos_placa1 >= 0 && pos_placa1 < m){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 	matriz[pos_placa1][j] = -V0/2;
@@ -454,7 +454,7 @@ int main(){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 	matriz[pos_placa2][j] = V0/2;
       }
-    }
+    }*/
       //crea arrays de overlaps enviados y recibidos
     double *ol_anterior_e;
     ol_anterior_e=malloc(n*sizeof(double));
