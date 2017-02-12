@@ -123,9 +123,6 @@ int main(){
     
     double *ol_recibido;
     ol_recibido=malloc(n*sizeof(double));
-    for (j=0;j<n;j++){
-    ol_recibido[j]=7;
-    }
     
     //printf("procesador 0 listo para recibir y mandar");
     
@@ -145,10 +142,6 @@ int main(){
     //guarda el ol recibido en la matriz_mundo
     for(j=0;j<n;j++){
     matriz_mundo[m-1][j]=ol_recibido[j];
-    if(k==0)
-    {
-    printf("recibido: %f \n",ol_recibido[j]);
-    }
     }
   }
 
@@ -438,10 +431,7 @@ int main(){
       //crea arrays de overlaps enviados y recibidos
     double *ol_anterior_e;
     ol_anterior_e=malloc(n*sizeof(double));
-    for(j=0;j<n;j++)
-    {
-    	ol_anterior_e[j]=3;
-    }
+    ol_anterior_e=matriz[0];
     
     double *ol_anterior_r;
     ol_anterior_r=malloc(n*sizeof(double));
@@ -454,12 +444,6 @@ int main(){
     ol_siguiente_r=malloc(n*sizeof(double));
     
     //printf("procesador %d listo para mandar y recibir", rank);
-    if(k==0){
-    printf("enviando desde el proc %d al %d\n",rank, rank-1);
-    for(j=0;j<n;j++)
-    {
-    	printf("%f ",ol_anterior_e[j]);
-    }
     
     }
     
