@@ -198,12 +198,45 @@ int main(){
 			}
     }
 
-    //imprime la matriz mundo
+    //imprime la matriz mundo (potencial)
     for(i=0; i<n; i++){
       for(j=0; j<n; j++){
-				printf("%.1f  ", matriz_mundo[i][j]);
+				printf("%f ", matriz_mundo[i][j]);
       }printf("\n");
     }
+    
+    
+      //calcula el campo electrico
+  double **Ex;
+  Ex = (double**) malloc(n*sizeof(double*));
+  double **Ey;
+  Ey = (double**) malloc(n*sizeof(double*));
+
+  for (i=0; i<=n; i++){
+    Ex[i] = (double*) malloc(n*sizeof(double));
+    Ey[i] = (double*) malloc(n*sizeof(double));
+  }
+
+  for(i=0; i<n-1; i++){
+    for(j=0; j<n-1; j++){
+      Ex[i][j]=(matriz_mundo[i][j]-matriz_mundo[i+1][j])/h;
+      Ey[i][j]=-(matriz_mundo[i][j]-matriz_mundo[i][j+1])/h;
+    }
+  }
+
+  //imprime los valores del potencial y del campo
+  
+  for(i=0; i<n; i++){
+    for(j=0; j<n; j++){
+      printf("%f ", Ex[i][j]);
+    }printf("\n");
+  }
+
+  for(i=0; i<n; i++){
+    for(j=0; j<n; j++){
+      printf("%f ", Ey[i][j]);
+    }printf("\n");
+  }
     
 
 
