@@ -11,8 +11,8 @@ Ey = datos[2]
 
 plt.imshow(potencial, extent = [0, 5, 0, 5])
 
-x = np.linspace(0, 5, 250)
-y = np.linspace(5, 0, 250)
+x = np.linspace(0, 5, len(Ex[1]))
+y = np.linspace(5, 0, len(Ey[1]))
 plt.streamplot(x, y, Ex, Ey, color = 'k', density = 1.3)
 
 plt.ylim([0, 5])
