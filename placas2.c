@@ -25,7 +25,7 @@ int main(){
   int first_col = z*rank-1;
   int pos_placa1 = (int)((L/2-d/2)/h)-first_col;
   int pos_placa2 = (int)((L/2+d/2)/h)-first_col;
-  printf("rank: %d z: %d first col: %d second col: %d",rank, z, pos_placa1, pos_placa2);
+  //printf("rank: %d z: %d first col: %d second col: %d",rank, z, pos_placa1, pos_placa2);
  
   //primer procesador
   if (rank==0){
@@ -103,7 +103,7 @@ int main(){
     for(source=1; source<world_size-1; source++)
     {
       MPI_Recv(matriz_interlineal, n*(z+2), MPI_DOUBLE, source, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-      if(source==1){
+/*
       printf("recibio del procesador %d \n", source);  
       
       for(i=0; i<(z+2); i++){
@@ -111,14 +111,15 @@ int main(){
 					printf("%.1f ", matriz_interlineal[i*n+j]);	
       	}
       	printf("\n");
-      }}
+      }*/
       
       matriz_inter=linealACuadrada(matriz_interlineal,z+2,n);
       for(i=1; i<z+1; i++){
 				for(j=0; j<n; j++){
 					matriz_mundo[z*source+i-1][j] = matriz_inter[i][j];
  				//	printf("%f ", matriz_inter[i][j]);
-				}printf("\n");
+				}
+				//printf("\n");
 			}
     }
 
@@ -172,32 +173,32 @@ int main(){
 	matriz[i][j] = 5;
       }
     }
-    /*
+    
     //fontera vertical
-    for(i=0; i<n; i++){
-      matriz[i][m-1] = 0;
+    for(i=0; i<m; i++){
+      matriz_mundo[i][0] = 0;
+      matriz_mundo[i][n-1] = 0;
     }
     
     //frontera horizontal
-    for(j=0; j<m; j++){
-      matriz[0][j] = 0;
-      matriz[n-1][j] = 0;
+    for(j=0; j<n; j++){
+      matriz[m-1][j] = 0;
     }
 
     //primera placa
     if(pos_placa1 >= 0 && pos_placa1<m){
-      for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-	matriz[i][pos_placa1] = -V0/2;
+      for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
+			matriz[pos_placa1][j] = -V0/2;
       }
     }
     
     //segunda placa
     if(pos_placa2 >= 0 && pos_placa2<m){
-      for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-	matriz[i][pos_placa2] = V0/2;
+      for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
+	matriz[pos_placa2][j] = V0/2;
       }
     }
-    */
+    
     double *matriz_linealsn;
     matriz_linealsn = malloc(n*m*sizeof(double));
 
@@ -232,33 +233,32 @@ int main(){
 	matriz[i][j] = 5;
       }
     }
-     /*
-    //frontera horizontal
-    for(j=0; j<m; j++){
-      matriz[0][j] = 9;
-      matriz[n-1][j] = 9;
+     
+    //fontera vertical
+    for(i=0; i<m; i++){
+      matriz_mundo[i][0] = 0;
+      matriz_mundo[i][n-1] = 0;
     }
 
     //primera placa
     if(pos_placa1 >= 0 && pos_placa1 < m){
-      for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-	matriz[i][pos_placa1] = -V0/2;
+      for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
+	matriz[pos_placa1][j] = -V0/2;
       }
     }
     
     //segunda placa
     if(pos_placa2 >= 0 && pos_placa2 < m){
-      for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-	matriz[i][pos_placa2] = V0/2;
+      for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
+	matriz[pos_placa2][j] = V0/2;
       }
     }
-*/
     
  		double *matriz_linealsn;
     matriz_linealsn = malloc(n*m*sizeof(double));
 
 		matriz_linealsn = cuadradaALineal(matriz,m,n);  
-		if(rank==1)
+		/*if(rank==1)
 		{
 		printf("matriz lineal del procesador %d\n",rank);
 		    for(i=0; i<m; i++){
@@ -266,7 +266,7 @@ int main(){
 				printf("%.1f ",matriz_linealsn[i*n+j]);
       }printf("\n");
     }
-    }
+    }*/
     //manda la matriz a matriz_mundo
     MPI_Send(matriz_linealsn, n*m, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
     
