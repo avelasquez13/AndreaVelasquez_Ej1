@@ -17,7 +17,7 @@ int main(){
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
   float L = 5, l = 2, d = 1, h = 5.0/16, V0 = 100, N = 2*pow((L/h), 2);
-  int n = 16;
+  int n = 32;
   
   //inicializa la matriz
   int i, j, k;
@@ -146,7 +146,7 @@ int main(){
     //imprime la matriz mundo
     for(i=0; i<n; i++){
       for(j=0; j<n; j++){
-				printf("%.1f ", matriz_mundo[i][j]);
+				printf("%.1f  ", matriz_mundo[i][j]);
       }printf("\n");
     }
     
