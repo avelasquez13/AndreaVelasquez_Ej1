@@ -121,15 +121,15 @@ int main(){
     double *ol_recibido;
     ol_recibido=malloc(n*sizeof(double));
     
-    printf("procesador 0 listo para recibir y mandar");
+    //printf("procesador 0 listo para recibir y mandar");
     
     //envia y recibe el overlap
     MPI_Isend(ol_siguiente, n, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD, &send_request);
     
-    printf("procesador 0 mando");
+    //printf("procesador 0 mando");
     MPI_Irecv(ol_recibido, n, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD, &recv_request);
     
-    printf("procesador 0 recibio");
+    //printf("procesador 0 recibio");
     
     //guarda el ol recibido en la matriz_mundo
     for(j=0;j<n;j++){
@@ -299,13 +299,13 @@ int main(){
     double *ol_recibido;
     ol_recibido=malloc(n*sizeof(double));
     
-    printf("ultimo procesador listo para mandar y recibir");
+    //printf("ultimo procesador listo para mandar y recibir");
     
     //envia y recibe el overlap
     MPI_Isend(ol_anterior,n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &send_request);
-    printf("ultimo procesador mando");
+    //printf("ultimo procesador mando");
     MPI_Irecv(ol_recibido, n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &recv_request);
-    printf("ultimo procesador recibio");
+    //printf("ultimo procesador recibio");
     
     //guarda el ol recibido en la matriz
     for(j=0;j<n;j++){
@@ -426,16 +426,16 @@ int main(){
     double *ol_siguiente_r;
     ol_siguiente_r=malloc(n*sizeof(double));
     
-    printf("procesador %d listo para mandar y recibir", rank);
+    //printf("procesador %d listo para mandar y recibir", rank);
     
     //envia y recibe los overlaps
     MPI_Isend(ol_anterior_e,n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &send_request);
     MPI_Isend(ol_siguiente_e,n, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, &send_request);
-    printf("procesador %d mando ambas", rank);
+    //printf("procesador %d mando ambas", rank);
     
     MPI_Irecv(ol_anterior_r, n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &recv_request);
     MPI_Irecv(ol_siguiente_r, n, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, &recv_request);
-    printf("procesador %d recibio ambas", rank);
+    //printf("procesador %d recibio ambas", rank);
     
     //guarda los ol recibidos en la matriz
     for(j=0;j<n;j++){
