@@ -15,7 +15,7 @@ int main(){
   MPI_Init(NULL, NULL);
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-
+	//TODO arreglar l/h
   float L = 5, l = 2, d = 1, h = 5.0/32, V0 = 100, N = 2*pow((L/h), 2);
   int n = 32;
   
@@ -49,7 +49,7 @@ int main(){
       }
     }
 
-    //fontera vertical
+    //frontera vertical
     for(i=0; i<m; i++){
       matriz_mundo[i][0] = 0;
       matriz_mundo[i][n-1] = 0;
@@ -65,15 +65,54 @@ int main(){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 			matriz_mundo[(int)((L/2-d/2)/h)][j] = -V0/2;
       }
-    }
-    
+      
     //segunda placa
     if(m>=(int)((L/2+d/2)/h)){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
-	matriz_mundo[(int)((L/2+d/2)/h)][j] = V0/2;
+			matriz_mundo[(int)((L/2+d/2)/h)][j] = V0/2;
+      }
+      
+      //inicializa la matriz temporal
+  double **matriz2;
+  matriz2 = (double**) malloc(m*sizeof(double*));
+
+  for (i=0; i<=m; i++){
+    matriz2[i] = (double*) malloc(n*sizeof(double));
+  }
+
+  for(i=0; i<m; i++){
+    for(j=0; j<n; j++){
+      matriz2[i][j] = 0;
+    }
+  }
+
+  //metodo de relajacion
+  for(k=0; k<N; k++){
+    for(i=1; i<m; i++){
+      for(j=1; j<n-1; j++){
+	  matriz2[i][j]=0.25*(matriz_mundo[i+1][j]+matriz_mundo[i][j+1]+matriz_mundo[i-1][j]+matriz_mundo[i][j-1]);
       }
     }
+    //primera placa
+    if(m>=(int)((L/2-d/2)/h)){
+      for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
+			matriz_mundo[(int)((L/2-d/2)/h)][j] = -V0/2;
+      }
+    //segunda placa
+    if(m>=(int)((L/2+d/2)/h)){
+      for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
+			matriz_mundo[(int)((L/2+d/2)/h)][j] = V0/2;
+      }
+      
+    for(i=1; i<m; i++){
+      for(j=1; j<n-1; j++){
+			matriz_mundo[i][j] = matriz2[i][j];
+      }
+    }
+  }
 
+    }
+    
     
 
 
@@ -253,8 +292,8 @@ int main(){
  }
 
 
-  /*
-
+ 
+/*
 
   //inicializa la matriz temporal
   double **matriz2;
@@ -335,8 +374,8 @@ int main(){
     }
   }
 
-
-  */
+*/
+  
 
   //MPI_Wait(&send_request, &status);
   //MPI_Wait(&recv_request, &status);
