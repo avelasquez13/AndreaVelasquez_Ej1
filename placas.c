@@ -9,8 +9,10 @@ double** linealACuadrada(double* mLineal, int n, int m);
 int main(){
 
   int world_size, rank, source, destination;
-  MPI_Request send_request, recv_request;
-  MPI_Status status;
+  MPI_Request send_request[2];
+  MPI_Request recv_request[2];
+  MPI_Status send_status[2];
+  MPI_Status recv_status[2];
 
   MPI_Init(NULL, NULL);
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
@@ -125,10 +127,10 @@ int main(){
     //printf("procesador 0 listo para recibir y mandar");
     
     //envia y recibe el overlap
-    MPI_Isend(ol_siguiente, n, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD, &send_request);
+    MPI_Isend(ol_siguiente, n, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD, &send_request[1]);
     
     //printf("procesador 0 mando");
-    MPI_Irecv(ol_recibido, n, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD, &recv_request);
+    MPI_Irecv(ol_recibido, n, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD, &recv_request[0]);
     
     //printf("procesador 0 recibio");
     
@@ -308,9 +310,9 @@ int main(){
     //printf("ultimo procesador listo para mandar y recibir");
     
     //envia y recibe el overlap
-    MPI_Isend(ol_anterior,n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &send_request);
+    MPI_Isend(ol_anterior,n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &send_request[0]);
     //printf("ultimo procesador mando");
-    MPI_Irecv(ol_recibido, n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &recv_request);
+    MPI_Irecv(ol_recibido, n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &recv_request[1]);
     //printf("ultimo procesador recibio");
     
     //guarda el ol recibido en la matriz
@@ -448,12 +450,12 @@ int main(){
     }
     
     //envia y recibe los overlaps
-    MPI_Isend(ol_anterior_e,n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &send_request);
-    MPI_Isend(ol_siguiente_e,n, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, &send_request);
+    MPI_Isend(ol_anterior_e,n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &send_request[0]);
+    MPI_Isend(ol_siguiente_e,n, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, &send_request[1]);
     //printf("procesador %d mando ambas", rank);
     
-    MPI_Irecv(ol_anterior_r, n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &recv_request);
-    MPI_Irecv(ol_siguiente_r, n, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, &recv_request);
+    MPI_Irecv(ol_anterior_r, n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &recv_request[0]);
+    MPI_Irecv(ol_siguiente_r, n, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, &recv_request[1]);
     //printf("procesador %d recibio ambas", rank);
     
     //guarda los ol recibidos en la matriz
@@ -560,10 +562,20 @@ int main(){
 
 */
   
-
-  MPI_Wait(&send_request, &status);
-  MPI_Wait(&recv_request, &status);
-
+	if(rank==0){
+	MPI_Wait(&send_request[1], &send_status[1]);
+  MPI_Wait(&recv_request[0], &recv_status[0]);
+	}
+	else if(rank==world_size-1){
+		MPI_Wait(&send_request[0], &send_status[0]);
+  	MPI_Wait(&recv_request[1], &recv_status[1]);
+	}
+  else{
+  	MPI_Wait(&send_request[0], &send_status[0]);
+  	MPI_Wait(&recv_request[0], &recv_status[0]);
+  	MPI_Wait(&send_request[1], &send_status[1]);
+  	MPI_Wait(&recv_request[1], &recv_status[1]);
+  }
 
   MPI_Finalize();
   return 0;
