@@ -19,7 +19,7 @@ int main(){
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	//TODO arreglar l/h y N
   float L = 5, l = 2, d = 1, h = 5.0/32, V0 = 100, N = 2*pow((L/h), 2);
-  int n = 32;
+  int n = 64;
   
   //inicializa la matriz
   int i, j, k;
@@ -219,8 +219,8 @@ int main(){
 
   for(i=0; i<n-1; i++){
     for(j=0; j<n-1; j++){
-      Ex[i][j]=(matriz_mundo[i][j]-matriz_mundo[i+1][j])/h;
-      Ey[i][j]=-(matriz_mundo[i][j]-matriz_mundo[i][j+1])/h;
+      Ey[i][j]=(matriz_mundo[i][j]-matriz_mundo[i+1][j])/h;
+      Ex[i][j]=-(matriz_mundo[i][j]-matriz_mundo[i][j+1])/h;
     }
   }
 
