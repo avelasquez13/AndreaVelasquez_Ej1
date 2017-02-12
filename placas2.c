@@ -387,7 +387,7 @@ double* cuadradaALineal(double** mCuadrada, int n, int m)
 		for(j=0;j<m;j++)
 		{
 		//printf("convirtiendo el %f\n",mCuadrada[i][j]);
-		mlineal[i*n+j]=mCuadrada[i][j];
+		mlineal[i*m+j]=mCuadrada[i][j];
 		}
 	}
 
@@ -409,7 +409,7 @@ double** linealACuadrada(double* mLineal, int n, int m)
 	{
 		for(j=0;j<m;j++)
 		{
-		mCuadrada[i][j]=mLineal[i*n+j];
+		mCuadrada[i][j]=mLineal[i*m+j];
 		}
 	}
 
