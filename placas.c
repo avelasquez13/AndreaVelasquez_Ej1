@@ -123,6 +123,9 @@ int main(){
     
     double *ol_recibido;
     ol_recibido=malloc(n*sizeof(double));
+    for (j=0;j<n;j++){
+    ol_recibido[j]=7;
+    }
     
     //printf("procesador 0 listo para recibir y mandar");
     
@@ -137,7 +140,7 @@ int main(){
     //guarda el ol recibido en la matriz_mundo
     for(j=0;j<n;j++){
     matriz_mundo[m-1][j]=ol_recibido[j];
-    if(k==0||k==100||k==1000)
+    if(k==0)
     {
     printf("%f ",ol_recibido[j]);
     }
