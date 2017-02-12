@@ -18,8 +18,8 @@ int main(){
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	//TODO arreglar l/h y N
-  float L = 5, l = 2, d = 1, h = 5.0/64, V0 = 100, N = 2*pow((L/h), 2);
-  int n = 64;
+  float L = 5, l = 2, d = 1, h = 5.0/512, V0 = 100, N = 2*pow((L/h), 2);
+  int n = 512;
   
   //inicializa la matriz
   int i, j, k;
@@ -474,14 +474,12 @@ int main(){
     
     //envia y recibe los overlaps
     MPI_Isend(ol_anterior_e,n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &send_request[0]);
-    MPI_Isend(ol_siguiente_e,n, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, &send_request[1]);
-    //printf("procesador %d mando ambas", rank);
-    
     MPI_Irecv(ol_anterior_r, n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &recv_request[0]);
+    MPI_Isend(ol_siguiente_e,n, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, &send_request[1]);
     MPI_Irecv(ol_siguiente_r, n, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, &recv_request[1]);
-    //printf("procesador %d recibio ambas", rank);
+
     
-      	MPI_Wait(&send_request[0], &send_status[0]);
+    MPI_Wait(&send_request[0], &send_status[0]);
   	MPI_Wait(&recv_request[0], &recv_status[0]);
   	MPI_Wait(&send_request[1], &send_status[1]);
   	MPI_Wait(&recv_request[1], &recv_status[1]);
