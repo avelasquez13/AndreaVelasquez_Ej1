@@ -316,7 +316,7 @@ int main(){
       }
     }
     
-    		//primera placa
+  //primera placa
     if(pos_placa1 >= 0 && pos_placa1<m){
       for(j=(int)((L/2-l/2)/h); j<(int)((L/2+l/2)/h); j++){
 			matriz[pos_placa1][j] = -V0/2;
@@ -470,7 +470,6 @@ int main(){
     double *ol_siguiente_r;
     ol_siguiente_r=malloc(n*sizeof(double));
     
-    //printf("procesador %d listo para mandar y recibir", rank);
     
     //envia y recibe los overlaps
     MPI_Isend(ol_anterior_e,n, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, &send_request[0]);
@@ -505,88 +504,7 @@ int main(){
 
 
  
-/*
 
-  //inicializa la matriz temporal
-  double **matriz2;
-  matriz2 = (double**) malloc(n*sizeof(double*));
-
-  for (i=0; i<=n; i++){
-    matriz2[i] = (double*) malloc(n*sizeof(double));
-  }
-
-  for(i=0; i<n; i++){
-    for(j=0; j<n; j++){
-      matriz2[i][j] = 0;
-    }
-  }
-
-  for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-    matriz2[i][(int)((L/2-d/2)/h)] = -V0/2;
-    matriz2[i][(int)((L/2+d/2)/h)] = V0/2;
-  }
-
-  
-  //metodo de relajacion
-  for(k=0; k<N; k++){
-    for(i=1; i<n-1; i++){
-      for(j=1; j<n-1; j++){
-	  matriz2[i][j]=0.25*(matriz[i+1][j]+matriz[i][j+1]+matriz[i-1][j]+matriz[i][j-1]);
-      }
-    }
-    for(i=(int)((L/2-l/2)/h); i<(int)((L/2+l/2)/h); i++){
-      matriz2[i][(int)((L/2-d/2)/h)] = -V0/2;
-      matriz2[i][(int)((L/2+d/2)/h)] = V0/2;
-    }
-    for(i=1; i<n-1; i++){
-      for(j=1; j<n-1; j++){
-	matriz[i][j] = matriz2[i][j];
-      }
-    }
-  }
-
-  
-
-
-  //calcula el campo electrico
-  double **Ex;
-  Ex = (double**) malloc(n*sizeof(double*));
-  double **Ey;
-  Ey = (double**) malloc(n*sizeof(double*));
-
-  for (i=0; i<=n; i++){
-    Ex[i] = (double*) malloc(n*sizeof(double));
-    Ey[i] = (double*) malloc(n*sizeof(double));
-  }
-
-  for(i=0; i<n; i++){
-    for(j=0; j<n; j++){
-      Ex[i][j]=(matriz[i][j]-matriz[i+1][j])/h;
-      Ey[i][j]=-(matriz[i][j]-matriz[i][j+1])/h;
-    }
-  }
-
-
-  //imprime los valores del potencial y del campo
-  for(i=0; i<n; i++){
-    for(j=0; j<n; j++){
-      printf("%f\n", matriz[i][j]);
-    }
-  }
-  
-  for(i=0; i<n; i++){
-    for(j=0; j<n; j++){
-      printf("%f\n", Ex[i][j]);
-    }
-  }
-
-  for(i=0; i<n; i++){
-    for(j=0; j<n; j++){
-      printf("%f\n", Ey[i][j]);
-    }
-  }
-
-*/
   
 	if(rank==0){
 
@@ -614,7 +532,6 @@ double* cuadradaALineal(double** mCuadrada, int n, int m)
 	{
 		for(j=0;j<m;j++)
 		{
-		//printf("convirtiendo el %f\n",mCuadrada[i][j]);
 		mlineal[i*m+j]=mCuadrada[i][j];
 		}
 	}
